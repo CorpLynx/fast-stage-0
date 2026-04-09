@@ -315,6 +315,7 @@ ingress_rules:
 
 * The `compute.restrictVpcPeering` policy is enabled by default in the hardened datasets with all VPC peerings restricted to networks **within** your organization (as defined by `under:organizations/${organization.id}`). This policy will block connections from Google-managed services (e.g., Cloud SQL, Cloud Memorystore, Cloud Build) that use **Private Service Access**, as they peer from an external Google-owned network. To allow these essential services to peer, you must explicitly add Google's `servicenetworking` network to the policy's `allow` list.
 
+
 Here is the required policy configuration:
 ```yaml
 compute.restrictVpcPeering:
