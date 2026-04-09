@@ -19,3 +19,9 @@ import {
   id       = "organizations/${local.organization_id}/policies/${each.key}"
   to       = module.organization-iam[0].google_org_policy_policy.default[each.key]
 }
+
+
+import {
+  to = module.factory.module.projects["log-0"].google_project.project[0]
+  id = "fpoc2-prod-audit-logs-0"
+}
