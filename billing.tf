@@ -35,7 +35,7 @@ locals {
 }
 
 module "billing-accounts" {
-  source   = "../../../modules/billing-account"
+  source   = "github.com/Corplynx/fast-modules//billing-account"
   for_each = local.billing_accounts
   id       = each.value.id
   context = merge(local.ctx, {

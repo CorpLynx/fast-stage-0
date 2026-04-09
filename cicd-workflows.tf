@@ -98,7 +98,7 @@ locals {
 }
 
 module "cicd-sa-apply" {
-  source   = "../../../modules/iam-service-account"
+  source   = "github.com/Corplynx/fast-modules//iam-service-account"
   for_each = local.cicd_workflows
   name     = each.value.service_accounts.apply
   service_account_reuse = {
@@ -128,7 +128,7 @@ module "cicd-sa-apply" {
 }
 
 module "cicd-sa-plan" {
-  source   = "../../../modules/iam-service-account"
+  source   = "github.com/Corplynx/fast-modules//iam-service-account"
   for_each = local.cicd_workflows
   name     = each.value.service_accounts.plan
   service_account_reuse = {

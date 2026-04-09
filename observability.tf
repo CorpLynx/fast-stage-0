@@ -27,7 +27,7 @@ locals {
 }
 
 module "projects-observability" {
-  source = "../../../modules/project"
+  source = "github.com/Corplynx/fast-modules//project"
   count = (
     local.ob_project.project_id != null && local.ob_project.number != null ? 1 : 0
   )

@@ -77,7 +77,7 @@ locals {
 }
 
 module "organization" {
-  source           = "../../../modules/organization"
+  source           = "github.com/Corplynx/fast-modules//organization"
   count            = local.organization_id != null ? 1 : 0
   organization_id  = "organizations/${local.organization_id}"
   logging_settings = lookup(local.organization, "logging", null)
@@ -105,7 +105,7 @@ module "organization" {
 }
 
 module "organization-iam" {
-  source          = "../../../modules/organization"
+  source          = "github.com/Corplynx/fast-modules//organization"
   count           = local.organization.id != null ? 1 : 0
   organization_id = module.organization[0].id
   asset_feeds     = lookup(local.organization, "asset_feeds", {})

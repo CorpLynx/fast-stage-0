@@ -26,7 +26,7 @@ locals {
 }
 
 module "factory" {
-  source = "../../../modules/project-factory"
+  source = "github.com/Corplynx/fast-modules//project-factory"
   data_defaults = merge(
     local.project_defaults.defaults,
     local.factory_billing,
