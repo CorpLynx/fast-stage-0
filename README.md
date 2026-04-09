@@ -620,6 +620,7 @@ iam_bindings:
 
 The folder hierarchy is managed via a filesystem tree of YAML configuration files, and leverages the [project factory module](https://github.com/Corplynx/fast-modules/tree/main/project-factory/README.md#folder-hierarchy) implementation, which supports up to 3 levels of folders (4 or more can be easily implemented in the module if needed). The module documentation provides additional information on this factory usage and formats.
 
+
 The default dataset implements a classic FAST layout, with top-level folders for stage 2 and stage 3, and can be easily tweaked by adding or removing any needed folder.
 
 ```bash
