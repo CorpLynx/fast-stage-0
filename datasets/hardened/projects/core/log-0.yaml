@@ -71,6 +71,6 @@ org_policies:
     rules:
       - allow:
           all: true
-  custom.storageRequireBucketObjectVersionning:
+  custom.storageRequireBucketObjectVersionningV2:
     rules:
       - enforce: true

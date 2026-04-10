@@ -18,15 +18,15 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.iamDisableAdminServiceAccount:
+custom.iamDisableAdminServiceAccountV2:
   rules:
     - enforce: true
 
-custom.iamDisableBasicRoles:
+custom.iamDisableBasicRolesV2:
   rules:
     - enforce: true
 
-custom.iamDisableProjectServiceAccountImpersonationRoles:
+custom.iamDisableProjectServiceAccountImpersonationRolesV2:
   rules:
     - enforce: false
       condition:
@@ -35,7 +35,7 @@ custom.iamDisableProjectServiceAccountImpersonationRoles:
           resource.matchTag('${organization.id}/org-policies', 'allowed-sa-impersonation')
     - enforce: true
 
-custom.iamDisableRedisAdminRoles:
+custom.iamDisableRedisAdminRolesV2:
   rules:
     - enforce: false
 

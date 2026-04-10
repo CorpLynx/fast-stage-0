@@ -74,35 +74,35 @@ container.managed.enableWorkloadIdentityFederation:
   rules:
     - enforce: true
 
-custom.gkeAllowedNodePoolImages:
+custom.gkeAllowedNodePoolImagesV2:
   rules:
     - enforce: true
 
-custom.gkeAllowedReleaseChannels:
+custom.gkeAllowedReleaseChannelsV2:
   rules:
     - enforce: true
 
-custom.gkeDisableAlphaCluster:
+custom.gkeDisableAlphaClusterV2:
   rules:
     - enforce: true
 
-custom.gkeDisableKubernetesDashboard:
+custom.gkeDisableKubernetesDashboardV2:
   rules:
     - enforce: true
 
-custom.gkeDisableLegacyAbac:
+custom.gkeDisableLegacyAbacV2:
   rules:
     - enforce: true
 
-custom.gkeDisableLegacyMetadataEndpoints:
+custom.gkeDisableLegacyMetadataEndpointsV2:
   rules:
     - enforce: true
 
-# custom.gkeRequireConfidentialNodes:
+# custom.gkeRequireConfidentialNodesV2:
 #   rules:
 #     - enforce: true
 
-custom.gkeRequireCOSImage:
+custom.gkeRequireCOSImageV2:
   rules:
     - enforce: true
 
@@ -110,54 +110,54 @@ custom.gkeRequireDataplaneV2:
   rules:
     - enforce: true
 
-custom.gkeRequireGKEMetadataServer:
+custom.gkeRequireGKEMetadataServerV2:
   rules:
     - enforce: true
 
-custom.gkeRequireIntegrityMonitoring:
+custom.gkeRequireIntegrityMonitoringV2:
   rules:
     - enforce: true
 
-custom.gkeRequireIntraNodeVisibility:
+custom.gkeRequireIntraNodeVisibilityV2:
   rules:
     - enforce: true
 
-custom.gkeRequireMasterAuthorizedNetworks:
+custom.gkeRequireMasterAuthorizedNetworksV2:
   rules:
     - enforce: true
 
-custom.gkeRequireMonitoring:
+custom.gkeRequireMonitoringV2:
   rules:
     - enforce: true
 
-custom.gkeRequireNodePoolAutoRepair:
+custom.gkeRequireNodePoolAutoRepairV2:
   rules:
     - enforce: true
 
-custom.gkeRequireNodePoolAutoUpgrade:
+custom.gkeRequireNodePoolAutoUpgradeV2:
   rules:
     - enforce: true
 
-custom.gkeRequireNodePoolCMEKEncryption:
+custom.gkeRequireNodePoolCMEKEncryptionV2:
   rules:
     - enforce: true
 
-custom.gkeRequireNodePoolSandbox:
+custom.gkeRequireNodePoolSandboxV2:
   rules:
     - enforce: true
 
-custom.gkeRequirePrivateEndpoint:
+custom.gkeRequirePrivateEndpointV2:
   rules:
     - enforce: true
 
-custom.gkeRequireRegionalClusters:
+custom.gkeRequireRegionalClustersV2:
   rules:
     - enforce: true
 
-custom.gkeRequireSecureBoot:
+custom.gkeRequireSecureBootV2:
   rules:
     - enforce: true
 
-custom.gkeRequireVPCNativeCluster:
+custom.gkeRequireVPCNativeClusterV2:
   rules:
     - enforce: true

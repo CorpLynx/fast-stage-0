@@ -18,14 +18,14 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.dataprocDisableDefaultServiceAccount:
+custom.dataprocDisableDefaultServiceAccountV2:
   rules:
     - enforce: true
 
-custom.dataprocRequireInternalIp:
+custom.dataprocRequireInternalIpV2:
   rules:
     - enforce: true
 
-custom.dataprocRequireKerberos:
+custom.dataprocRequireKerberosV2:
   rules:
     - enforce: true

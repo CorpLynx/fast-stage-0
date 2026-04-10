@@ -18,14 +18,14 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.dnsAllowedSigningAlgorithms:
+custom.dnsAllowedSigningAlgorithmsV2:
   rules:
     - enforce: true
 
-custom.dnsRequireManageZoneDNSSEC:
+custom.dnsRequireManageZoneDNSSECV2:
   rules:
     - enforce: true
 
-custom.dnsRequirePolicyLogging:
+custom.dnsRequirePolicyLoggingV2:
   rules:
     - enforce: true

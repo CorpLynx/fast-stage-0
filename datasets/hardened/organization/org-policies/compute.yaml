@@ -124,7 +124,7 @@ compute.vmExternalIpAccess:
     - deny:
         all: true
 
-custom.networkRequireSubnetPrivateGoogleAccess:
+custom.networkRequireSubnetPrivateGoogleAccessV2:
   rules:
     - enforce: true
 

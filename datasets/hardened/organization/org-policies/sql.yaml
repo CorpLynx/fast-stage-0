@@ -18,47 +18,47 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.cloudsqlDisablePublicAuthorizedNetworks:
+custom.cloudsqlDisablePublicAuthorizedNetworksV2:
   rules:
     - enforce: true
 
-custom.cloudsqlEnforcePasswordComplexity:
+custom.cloudsqlEnforcePasswordComplexityV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequireAutomatedBackup:
+custom.cloudsqlRequireAutomatedBackupV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequireHighAvailability:
+custom.cloudsqlRequireHighAvailabilityV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequireMySQLDatabaseFlags:
+custom.cloudsqlRequireMySQLDatabaseFlagsV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequirePointInTimeRecovery:
+custom.cloudsqlRequirePointInTimeRecoveryV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequirePostgreSQLDatabaseAdditionalFlags:
+custom.cloudsqlRequirePostgreSQLDatabaseAdditionalFlagsV2:
   rules:
     - enforce: false
 
-custom.cloudsqlRequirePostgreSQLDatabaseFlags:
+custom.cloudsqlRequirePostgreSQLDatabaseFlagsV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequireRootPassword:
+custom.cloudsqlRequireRootPasswordV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequireSQLServerDatabaseFlags:
+custom.cloudsqlRequireSQLServerDatabaseFlagsV2:
   rules:
     - enforce: true
 
-custom.cloudsqlRequireSSLConnection:
+custom.cloudsqlRequireSSLConnectionV2:
   rules:
     - enforce: true
 

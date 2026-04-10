@@ -18,19 +18,19 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.cloudkmsAllowedAlgorithms:
+custom.cloudkmsAllowedAlgorithmsV2:
   rules:
     - enforce: true
 
-custom.cloudkmsAllowedProtectionLevel:
+custom.cloudkmsAllowedProtectionLevelV2:
   rules:
     - enforce: true
 
-custom.cloudkmsAllowedRotationPeriod:
+custom.cloudkmsAllowedRotationPeriodV2:
   rules:
     - enforce: true
 
-custom.dataprocRequireDiskCmekEncryption:
+custom.dataprocRequireDiskCmekEncryptionV2:
   rules:
     - enforce: true
 
