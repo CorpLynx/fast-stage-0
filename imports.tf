@@ -24,3 +24,18 @@ import {
   id = "fpoc2-prod-audit-logs-0"
   to = module.factory.module.projects["log-0"].google_project.project[0]
 }
+
+import {
+  id = "organizations/1041701195417/customConstraints/custom.storageRequireBucketObjectVersionningV2"
+  to = module.organization-iam[0].google_org_policy_custom_constraint.constraint["custom.storageRequireBucketObjectVersionningV2"]
+}
+
+import {
+  id = "organizations/1041701195417/customConstraints/custom.iamDisableAdminServiceAccountV2"
+  to = module.organization-iam[0].google_org_policy_custom_constraint.constraint["custom.iamDisableAdminServiceAccountV2"]
+}
+
+import {
+  id = "organizations/1041701195417/customConstraints/custom.iamDisableProjectServiceAccountImpersonationRolesV2"
+  to = module.organization-iam[0].google_org_policy_custom_constraint.constraint["custom.iamDisableProjectServiceAccountImpersonationRolesV2"]
+}
