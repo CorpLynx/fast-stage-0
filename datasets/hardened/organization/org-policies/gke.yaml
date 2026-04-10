@@ -106,7 +106,7 @@ custom.gkeRequireCOSImageV2:
   rules:
     - enforce: true
 
-custom.gkeRequireDataplaneV2:
+custom.gkeRequireDataplaneV3:
   rules:
     - enforce: true
 

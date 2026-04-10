@@ -14,7 +14,7 @@
 
 # yaml-language-server: $schema=../../../../schemas/custom-constraint.schema.json
 
-custom.gkeRequireDataplaneV2:
+custom.gkeRequireDataplaneV3:
   action_type: DENY
   condition: |-
     resource.networkConfig.datapathProvider != 'ADVANCED_DATAPATH'

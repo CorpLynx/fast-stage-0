@@ -66,3 +66,36 @@
     --member="serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com" \
     --role="roles/bigquery.jobUser"
   ```
+
+---
+
+### 7. Custom constraint soft-delete — `gkeRequireDataplaneV2`
+- **Error:** `googleapi: Error 400: The custom constraint Id [customConstraints/custom.gkeRequireDataplaneV2] was used previously and cannot be reused at this time`
+- **Cause:** Both the original `gkeRequireDataplaneV2` and the V2 rename were in the 30-day soft-delete cooldown from prior deployments.
+- **Fix:** Renamed constraint file and all references from `V2` to `V3`.
+
+---
+
+### 8. Custom constraints already exist — 409 on import
+- **Error:** `googleapi: Error 409` on `storageRequireBucketObjectVersionningV2`, `iamDisableAdminServiceAccountV2`, `iamDisableProjectServiceAccountImpersonationRolesV2`
+- **Cause:** These constraints already existed in GCP (two pre-existing, one manually created earlier) but weren't in Terraform state.
+- **Fix:** Added import blocks to `imports.tf` for all three constraints.
+
+---
+
+### 9. Bootstrap SA missing `roles/owner` at org level
+- **Error:** Multiple 403s on `resourcemanager.tagKeys.get`, `cloudkms.keyRings.get`, `storage.objects.create`, etc.
+- **Cause:** `fast-bootstrap` SA only had specific roles at the org level, not broad enough permissions to manage all resources during bootstrap. Prior deployment had left IAM in a partial state.
+- **Fix:** Granted `roles/owner` to `fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com` at the org level. To be removed after bootstrap completes.
+  ```bash
+  gcloud organizations add-iam-policy-binding 1041701195417 \
+    --member="serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com" \
+    --role="roles/owner"
+  ```
+
+---
+
+### 10. `.terraform` directory committed to git
+- **Error:** GitHub rejected push due to provider binaries exceeding 100MB file size limit.
+- **Cause:** `terraform init` was run locally and `.terraform/` was committed before a `.gitignore` was in place.
+- **Fix:** Added `.gitignore` excluding `.terraform/`, rewrote git history with `git filter-branch` to remove the directory from past commits, force pushed.
