@@ -134,7 +134,7 @@ buckets:
   iac-org-state:
     description: Terraform state for the org-level automation.
     versioning: true
-    encryption_key: $kms_keys:iac-0/ew1/storage
+    encryption_key: $kms_keys:iac-0/ue4/storage
     lifecycle_rules:
       nearline-30:
         action:
@@ -169,7 +169,7 @@ buckets:
   iac-stage-state:
     description: Terraform state for stage automation.
     versioning: true
-    encryption_key: $kms_keys:iac-0/ew1/storage
+    encryption_key: $kms_keys:iac-0/ue4/storage
     lifecycle_rules:
       nearline-30:
         action:
@@ -230,7 +230,7 @@ buckets:
   iac-outputs:
     description: Terraform state for the org-level automation.
     versioning: true
-    encryption_key: $kms_keys:iac-0/ew1/storage
+    encryption_key: $kms_keys:iac-0/ue4/storage
     lifecycle_rules:
       nearline-30:
         action:
