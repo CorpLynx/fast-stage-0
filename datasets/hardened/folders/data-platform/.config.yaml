@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# yaml-language-server: $schema=../../../../../schemas/folder.schema.json
+# yaml-language-server: $schema=../../../../schemas/folder.schema.json
 
-name: Development
-parent: $folder_ids:security
-tag_bindings:
-  environment: $tag_values:environment/development
-iam_by_principals:
-  $iam_principals:service_accounts/iac-0/iac-dp-dev-ro:
-    - $custom_roles:cloudkms_viewer
-  $iam_principals:service_accounts/iac-0/iac-pf-ro:
-    - $custom_roles:cloudkms_viewer
+name: Data Platform
+org_policies:
+  custom.iamDisableAdminServiceAccountV2:
+    rules:
+      - enforce: false
+  custom.iamDisableProjectServiceAccountImpersonationRolesV2:
+    rules:
+      - enforce: false
