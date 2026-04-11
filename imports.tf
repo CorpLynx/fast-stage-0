@@ -30,7 +30,6 @@ import {
   to = module.organization-iam[0].google_org_policy_custom_constraint.constraint["custom.storageRequireBucketObjectVersionningV2"]
 }
 
-# TEMPORARILY COMMENTED OUT — matches commented-out constraint in custom-constraints yaml
 import {
   id = "organizations/1041701195417/customConstraints/custom.iamDisableAdminServiceAccountV2"
   to = module.organization-iam[0].google_org_policy_custom_constraint.constraint["custom.iamDisableAdminServiceAccountV2"]

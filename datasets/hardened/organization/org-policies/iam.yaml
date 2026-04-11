@@ -20,7 +20,7 @@
 
 custom.iamDisableAdminServiceAccountV2:
   rules:
-    - enforce: true
+    - enforce: false  # TEMPORARY: disabled during bootstrap SA setup, re-enable after WIF switchover
 
 custom.iamDisableBasicRolesV2:
   rules:
