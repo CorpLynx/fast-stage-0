@@ -1,0 +1,85 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# yaml-language-server: $schema=../../../../schemas/folder.schema.json
+
+name: Shared Services
+# Platform team owns this folder — manages shared infrastructure
+# (Artifact Registry, KMS, shared databases, monitoring, etc.)
+# Project factory can vend projects here and grant workloads scoped access
+# to shared resources.
+iam_by_principals:
+  # Platform team IaC SA — full admin over shared services projects
+  $iam_principals:service_accounts/iac-0/iac-org-rw:
+    - roles/resourcemanager.folderAdmin
+    - roles/resourcemanager.projectCreator
+    - roles/resourcemanager.projectDeleter
+    - roles/resourcemanager.projectIamAdmin
+    - roles/resourcemanager.tagUser
+    - roles/serviceusage.serviceUsageAdmin
+    - roles/logging.admin
+    - roles/storage.admin
+    - roles/cloudkms.admin
+    - roles/artifactregistry.admin
+    - roles/iam.serviceAccountAdmin
+  # Platform team read-only SA
+  $iam_principals:service_accounts/iac-0/iac-org-ro:
+    - roles/browser
+    - roles/resourcemanager.folderViewer
+    - roles/resourcemanager.tagViewer
+    - roles/serviceusage.serviceUsageViewer
+    - roles/logging.viewer
+    - roles/storage.objectViewer
+    - roles/cloudkms.viewer
+    - roles/artifactregistry.reader
+    - $custom_roles:logging_viewer
+    - $custom_roles:service_account_viewer
+  # Project factory — vends projects and wires them to shared resources
+  $iam_principals:service_accounts/iac-0/iac-pf-rw:
+    - roles/resourcemanager.projectCreator
+    - roles/resourcemanager.projectDeleter
+    - roles/resourcemanager.projectIamAdmin
+    - roles/resourcemanager.tagUser
+    - roles/serviceusage.serviceUsageAdmin
+    - roles/iam.serviceAccountAdmin
+    - roles/logging.admin
+    - roles/cloudkms.cryptoKeyEncrypterDecrypter
+    - roles/artifactregistry.reader
+  $iam_principals:service_accounts/iac-0/iac-pf-ro:
+    - roles/browser
+    - roles/resourcemanager.folderViewer
+    - roles/resourcemanager.tagViewer
+    - roles/serviceusage.serviceUsageViewer
+    - roles/logging.viewer
+    - roles/cloudkms.viewer
+    - roles/artifactregistry.reader
+    - $custom_roles:logging_viewer
+    - $custom_roles:service_account_viewer
+    - $custom_roles:project_iam_viewer
+# Scoped delegated grant — project factory can only grant these specific roles
+# to workload SAs that need access to shared resources
+iam_bindings:
+  project_factory:
+    role: roles/resourcemanager.projectIamAdmin
+    members:
+      - $iam_principals:service_accounts/iac-0/iac-pf-rw
+    condition:
+      title: Project factory delegated IAM grant for shared resources.
+      expression: |
+        api.getAttribute('iam.googleapis.com/modifiedGrantsByRole', []).hasOnly([
+          'roles/cloudkms.cryptoKeyEncrypterDecrypter',
+          'roles/artifactregistry.reader'
+        ])
+tag_bindings:
+  context: $tag_values:context/project-factory

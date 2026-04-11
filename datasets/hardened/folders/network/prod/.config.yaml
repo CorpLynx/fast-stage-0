@@ -14,6 +14,6 @@
 
 # yaml-language-server: $schema=../../../../../schemas/folder.schema.json
 
-name: Production
+name: net-dev
 tag_bindings:
   environment: $tag_values:environment/production

@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schemas/cicd-workflows.schema.json
+
+# CI/CD workflow for FAST Stage 0 (org-setup)
+# Uses Terraform Cloud WIF for authentication
+0-org-setup:
+  provider_files:
+    apply: 0-org-setup-providers.tf
+    plan: 0-org-setup-providers.tf
+  repository:
+    name: Corplynx/fast-stage-0
+    type: github
+    apply_branches:
+      - main
+  service_accounts:
+    apply: $iam_principals:service_accounts/iac-0/iac-org-cicd-rw
+    plan: $iam_principals:service_accounts/iac-0/iac-org-cicd-ro
+  workload_identity:
+    pool: $workload_identity_pools:iac-0/default
+    provider: $workload_identity_providers:iac-0/default/github-default
+    iam_principalsets:
+      template: github

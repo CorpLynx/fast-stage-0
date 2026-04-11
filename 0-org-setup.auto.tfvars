@@ -8,3 +8,9 @@ org_policies_imports = [
   "compute.setNewProjectDefaultToZonalDNSOnly",
   "iam.automaticIamGrantsForDefaultServiceAccounts",
 ]
+
+factories_config = {
+  paths = {
+    cicd_workflows = "cicd-workflows.yaml"
+  }
+}
