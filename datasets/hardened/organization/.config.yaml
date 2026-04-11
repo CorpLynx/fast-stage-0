@@ -148,3 +148,37 @@ logging:
 iam:
   # reset default role on new organizations
   roles/billing.creator: []
+# TEMPORARY: additive IAM bindings for bootstrap SA
+# These won't be wiped by Terraform's authoritative IAM management.
+# Remove after WIF switchover and bootstrap SA is deleted.
+iam_bindings_additive:
+  bootstrap_sa_org_admin:
+    role: roles/resourcemanager.organizationAdmin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_project_creator:
+    role: roles/resourcemanager.projectCreator
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_folder_admin:
+    role: roles/resourcemanager.folderAdmin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_role_admin:
+    role: roles/iam.organizationRoleAdmin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_policy_admin:
+    role: roles/orgpolicy.policyAdmin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_tag_admin:
+    role: roles/resourcemanager.tagAdmin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_tag_user:
+    role: roles/resourcemanager.tagUser
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_acm_admin:
+    role: roles/accesscontextmanager.policyAdmin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_contacts_admin:
+    role: roles/essentialcontacts.admin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_monitoring_admin:
+    role: roles/monitoring.admin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com

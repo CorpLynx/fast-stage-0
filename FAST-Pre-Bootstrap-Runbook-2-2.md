@@ -219,6 +219,15 @@ Grant the bootstrap SA the org-level roles it needs to run Stage 0.
 These are broad permissions — Stage 0 creates projects, custom roles,
 folders, service accounts, org policies, logging sinks, and tags.
 
+> **CRITICAL:** FAST manages org IAM authoritatively via `module.organization-iam`.
+> This means any roles granted manually via `gcloud` will be **wiped on every
+> Terraform apply**. The correct way to persist bootstrap SA roles is to add them
+> to `iam_bindings_additive` in `datasets/hardened/organization/.config.yaml`
+> before running Stage 0. See Step 5b below.
+>
+> Only use the `gcloud` grants below for the **first apply** before the config
+> change has been pushed. After that, Terraform manages them.
+
 ```bash
 # Each role grants a specific capability needed by Stage 0:
 #   organizationAdmin       — full org-level admin (create custom roles, manage IAM)
@@ -321,6 +330,57 @@ for tag_key_id in $(gcloud resource-manager tags keys list --parent=organization
     || echo "Failed: $tag_key_id"
 done
 ```
+
+---
+
+## Step 5b: Persist Bootstrap SA Roles in Terraform Config
+
+The `gcloud` grants above will be wiped on every `terraform apply` because
+FAST manages org IAM authoritatively. Add the bootstrap SA roles to
+`iam_bindings_additive` in `datasets/hardened/organization/.config.yaml`
+so Terraform preserves them:
+
+```yaml
+# TEMPORARY: additive IAM bindings for bootstrap SA
+# Remove after WIF switchover and bootstrap SA is deleted.
+iam_bindings_additive:
+  bootstrap_sa_org_admin:
+    role: roles/resourcemanager.organizationAdmin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_project_creator:
+    role: roles/resourcemanager.projectCreator
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_folder_admin:
+    role: roles/resourcemanager.folderAdmin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_role_admin:
+    role: roles/iam.organizationRoleAdmin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_policy_admin:
+    role: roles/orgpolicy.policyAdmin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_tag_admin:
+    role: roles/resourcemanager.tagAdmin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_tag_user:
+    role: roles/resourcemanager.tagUser
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_acm_admin:
+    role: roles/accesscontextmanager.policyAdmin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_contacts_admin:
+    role: roles/essentialcontacts.admin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+  bootstrap_sa_monitoring_admin:
+    role: roles/monitoring.admin
+    member: serviceAccount:fast-bootstrap@SEED_PROJECT.iam.gserviceaccount.com
+```
+
+Commit this to your repo before triggering the first TFC run. This is the
+**single most important step** — without it, every apply will wipe the
+bootstrap SA's roles and the run will fail.
+
+Remove this entire block during cleanup after WIF switchover.
 
 ---
 
