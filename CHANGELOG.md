@@ -99,3 +99,35 @@
 - **Error:** GitHub rejected push due to provider binaries exceeding 100MB file size limit.
 - **Cause:** `terraform init` was run locally and `.terraform/` was committed before a `.gitignore` was in place.
 - **Fix:** Added `.gitignore` excluding `.terraform/`, rewrote git history with `git filter-branch` to remove the directory from past commits, force pushed.
+
+---
+
+### 11. Bootstrap SA roles wiped mid-run by `custom.iamDisableAdminServiceAccountV2`
+- **Error:** `403: Permission 'orgpolicy.customConstraints.get' denied` on all custom constraints, plus `403: The caller does not have permission` on essential contacts.
+- **Cause:** Two compounding issues:
+  1. The `module.organization-iam` authoritative IAM apply wipes any manually-granted org-level roles on the bootstrap SA that aren't in Terraform state.
+  2. The `custom.iamDisableAdminServiceAccountV2` custom constraint was being applied mid-run (before the IAM bindings step), which then blocked Terraform from granting the bootstrap SA the admin roles it needed to complete the run.
+  This created a deadlock: the SA needed `orgpolicy.policyAdmin` to refresh state, but the constraint prevented granting it, and Terraform couldn't run to apply the `iam_bindings_additive` entries that would have preserved it.
+- **Fix:**
+  1. Added all required bootstrap SA roles to `iam_bindings_additive` in `datasets/hardened/organization/.config.yaml` so they survive authoritative IAM applies.
+  2. Temporarily commented out the `custom.iamDisableAdminServiceAccountV2` constraint in its YAML file and its corresponding import block in `imports.tf` to prevent it from firing mid-run.
+  3. Manually disabled the constraint via org policy override, waited 70 seconds for propagation, then granted the missing roles:
+  ```bash
+  gcloud org-policies set-policy /tmp/disable-iam-constraint.yaml
+  sleep 70
+  for role in \
+    roles/resourcemanager.organizationAdmin \
+    roles/resourcemanager.folderAdmin \
+    roles/iam.organizationRoleAdmin \
+    roles/orgpolicy.policyAdmin \
+    roles/compute.xpnAdmin \
+    roles/resourcemanager.tagAdmin \
+    roles/accesscontextmanager.policyAdmin \
+    roles/essentialcontacts.admin; do
+    gcloud organizations add-iam-policy-binding 1041701195417 \
+      --member="serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com" \
+      --role="$role" --condition=None
+  done
+  ```
+  4. Triggered TFC run immediately after. Once the run succeeds, `iam_bindings_additive` preserves the roles on all future applies.
+  5. After bootstrap is complete and WIF is in place, uncomment the constraint files and remove the `iam_bindings_additive` block.

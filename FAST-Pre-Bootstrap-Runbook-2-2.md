@@ -267,6 +267,10 @@ folders, service accounts, org policies, logging sinks, and tags.
 # loop below with --quiet, the prompt will cause silent failures. Run each role
 # grant individually with --condition=None if the loop fails.
 #
+# PROPAGATION: After disabling the constraint, wait at least 70 seconds before
+# running the role grants. GCP org policy changes can take up to 60-90 seconds
+# to propagate globally. Running grants too soon will still get FAILED_PRECONDITION.
+#
 # Disable the constraint first:
 #   cat > /tmp/policy.yaml << 'EOF'
 #   name: organizations/ORG_ID/policies/custom.iamDisableAdminServiceAccountV2
@@ -338,7 +342,22 @@ done
 The `gcloud` grants above will be wiped on every `terraform apply` because
 FAST manages org IAM authoritatively. Add the bootstrap SA roles to
 `iam_bindings_additive` in `datasets/hardened/organization/.config.yaml`
-so Terraform preserves them:
+so Terraform preserves them.
+
+> **CRITICAL — `custom.iamDisableAdminServiceAccountV2` deadlock:**
+> If your org has the `custom.iamDisableAdminServiceAccountV2` custom constraint
+> active, Terraform will apply it mid-run (before the IAM bindings step), which
+> blocks granting admin roles to the bootstrap SA. This creates a deadlock where
+> the SA can't get the permissions it needs to complete the run.
+>
+> To break the deadlock:
+> 1. Temporarily comment out the constraint definition in
+>    `datasets/hardened/organization/custom-constraints/custom.iamDisableAdminServiceAccountV2.yaml`
+>    and its import block in `imports.tf`.
+> 2. Disable the constraint via org policy override before granting roles (see Step 5).
+> 3. Once a TFC run succeeds with `iam_bindings_additive` in place, the roles are
+>    preserved on all future applies and you no longer need the manual grants.
+> 4. After WIF switchover, uncomment the constraint files and remove `iam_bindings_additive`.
 
 ```yaml
 # TEMPORARY: additive IAM bindings for bootstrap SA

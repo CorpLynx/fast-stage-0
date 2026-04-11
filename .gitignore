@@ -7,3 +7,7 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+.kiro/
+policies/
+test/
+sentinel.hcl
