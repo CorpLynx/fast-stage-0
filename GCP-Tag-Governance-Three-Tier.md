@@ -83,10 +83,98 @@ their folder scope. They cannot create tags at the org or network level, so
 | Role | Platform team | Network team | Workload teams |
 |------|--------------|--------------|----------------|
 | `tagAdmin` @ org | ✅ | ❌ | ❌ |
+| `tagAdmin` @ specific `plt-` tag keys | ✅ | ❌ | ❌ |
 | `tagAdmin` @ network folder | ❌ | ✅ | ❌ |
+| `tagAdmin` @ specific `net-` tag keys | ❌ | ✅ | ❌ |
 | `tagAdmin` @ workload folder | ❌ | ❌ | ✅ |
 | `tagUser` @ workload folder | ✅ | ✅ | ✅ |
 | `tagViewer` @ org | ✅ | ✅ | ✅ |
+
+---
+
+## Per-Tag-Key IAM (Resource-Level Policies)
+
+Tag keys in GCP support their own IAM policy independent of the org/folder/project
+hierarchy — similar to resource-based policies in AWS. This means you can grant
+access to a specific tag key without giving a principal broad `tagAdmin` at the
+org or folder level.
+
+This is the preferred enforcement mechanism for the three-tier model. Rather than
+relying solely on scope (org vs folder), you grant `tagAdmin` directly on each
+tag key to the team that owns it. Other teams simply don't appear in that tag
+key's IAM policy and cannot manage it regardless of what org-level roles they have.
+
+### Why this matters
+
+Even a principal with `roles/resourcemanager.tagAdmin` at the org level cannot
+manage a specific tag key if that key's resource-level IAM policy doesn't include
+them — the resource-level policy is evaluated independently. This gives you
+fine-grained control per key rather than per scope.
+
+### Example — Platform tag key IAM
+
+Platform team creates `plt-environment` and grants only their automation SA access:
+
+```bash
+# Get the tag key ID
+TAG_KEY_ID=$(gcloud resource-manager tags keys describe \
+  1041701195417/plt-environment --format="value(name)")
+
+# Grant platform SA tagAdmin on this specific key only
+gcloud resource-manager tags keys add-iam-policy-binding "$TAG_KEY_ID" \
+  --member="serviceAccount:platform-sa@platform-project.iam.gserviceaccount.com" \
+  --role="roles/resourcemanager.tagAdmin"
+
+# Grant network and workload teams tagViewer so they can see the key and its values
+gcloud resource-manager tags keys add-iam-policy-binding "$TAG_KEY_ID" \
+  --member="serviceAccount:network-sa@network-project.iam.gserviceaccount.com" \
+  --role="roles/resourcemanager.tagViewer"
+
+gcloud resource-manager tags keys add-iam-policy-binding "$TAG_KEY_ID" \
+  --member="group:workload-teams@gigachadglobal.org" \
+  --role="roles/resourcemanager.tagViewer"
+```
+
+### Example — Network tag key IAM
+
+Network team creates `net-connectivity` and controls who can bind its values:
+
+```bash
+TAG_KEY_ID=$(gcloud resource-manager tags keys describe \
+  1041701195417/net-connectivity --format="value(name)")
+
+# Network team SA gets full admin on this key
+gcloud resource-manager tags keys add-iam-policy-binding "$TAG_KEY_ID" \
+  --member="serviceAccount:network-sa@network-project.iam.gserviceaccount.com" \
+  --role="roles/resourcemanager.tagAdmin"
+
+# Workload teams can bind pre-created values but cannot create new ones
+gcloud resource-manager tags keys add-iam-policy-binding "$TAG_KEY_ID" \
+  --member="group:workload-teams@gigachadglobal.org" \
+  --role="roles/resourcemanager.tagUser"
+```
+
+### Terraform example
+
+```hcl
+# Grant platform SA tagAdmin on a specific tag key
+resource "google_tags_tag_key_iam_binding" "platform_tag_admin" {
+  tag_key = google_tags_tag_key.plt_environment.id
+  role    = "roles/resourcemanager.tagAdmin"
+  members = [
+    "serviceAccount:${google_service_account.platform_sa.email}"
+  ]
+}
+
+# Grant workload teams tagUser on the same key (can bind, not create)
+resource "google_tags_tag_key_iam_binding" "workload_tag_user" {
+  tag_key = google_tags_tag_key.plt_environment.id
+  role    = "roles/resourcemanager.tagUser"
+  members = [
+    "group:workload-teams@gigachadglobal.org"
+  ]
+}
+```
 
 ---
 

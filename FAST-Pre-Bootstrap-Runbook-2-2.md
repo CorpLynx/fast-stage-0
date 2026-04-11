@@ -247,6 +247,36 @@ folders, service accounts, org policies, logging sinks, and tags.
 #   cloudkms.admin          — manage KMS keyrings in automation projects (403 without it)
 #   bigquery.jobUser        — required by the Google Terraform provider to look up
 #                             BQ service account identities on managed projects
+#
+# IMPORTANT: The custom org policy custom.iamDisableAdminServiceAccountV2 blocks
+# granting admin roles to service accounts. You must temporarily disable it before
+# running the role grants below, then re-enable it after.
+#
+# ALSO IMPORTANT: If your org policy already has conditional bindings (version 3),
+# gcloud will prompt you to specify a condition for each new binding. Always select
+# "None" or pass --condition=None to add an unconditional binding. If you use the
+# loop below with --quiet, the prompt will cause silent failures. Run each role
+# grant individually with --condition=None if the loop fails.
+#
+# Disable the constraint first:
+#   cat > /tmp/policy.yaml << 'EOF'
+#   name: organizations/ORG_ID/policies/custom.iamDisableAdminServiceAccountV2
+#   spec:
+#     rules:
+#       - enforce: false
+#   EOF
+#   gcloud org-policies set-policy /tmp/policy.yaml
+#
+# After granting all roles, re-enable by deleting the override:
+#   gcloud org-policies delete custom.iamDisableAdminServiceAccountV2 \
+#     --organization=ORG_ID
+#
+# Verify all roles landed correctly after granting (no conditions should be present):
+#   gcloud organizations get-iam-policy ORG_ID --format=json | python3 -c "
+#   import json,sys
+#   p=json.load(sys.stdin)
+#   [print(b['role']) for b in p['bindings'] if any('BOOTSTRAP_SA_EMAIL' in m for m in b['members'])]
+#   "
 for role in \
   roles/resourcemanager.organizationAdmin \
   roles/resourcemanager.projectCreator \
@@ -270,12 +300,25 @@ for role in \
 
   # add-iam-policy-binding is additive — it won't remove existing bindings.
   # --quiet suppresses the confirmation prompt.
+  # --condition=None is required when the policy already has conditional bindings (v3 policy).
   gcloud organizations add-iam-policy-binding "$ORG_ID" \
     --member="$SA_MEMBER" \
     --role="$role" \
-    --quiet > /dev/null 2>&1 \
+    --condition=None \
     && echo "Granted: $role" \
     || echo "Failed: $role"
+done
+
+# ADDED: Grant tagAdmin on each org-level tag key directly.
+# Even with tagAdmin at the org level, tag keys have their own IAM layer and
+# the SA must be explicitly granted access on each key. Get tag key IDs with:
+#   gcloud resource-manager tags keys list --parent=organizations/$ORG_ID
+for tag_key_id in $(gcloud resource-manager tags keys list --parent=organizations/$ORG_ID --format="value(name)"); do
+  gcloud resource-manager tags keys add-iam-policy-binding "$tag_key_id" \
+    --member="$SA_MEMBER" \
+    --role="roles/resourcemanager.tagAdmin" \
+    && echo "Granted tagAdmin on $tag_key_id" \
+    || echo "Failed: $tag_key_id"
 done
 ```
 
