@@ -55,6 +55,7 @@ iam_by_principals:
     - roles/iam.workforcePoolAdmin
   $iam_principals:service_accounts/iac-0/iac-org-rw:
     - roles/accesscontextmanager.policyAdmin
+    - roles/assuredworkloads.admin
     - roles/cloudasset.viewer
     - roles/essentialcontacts.admin
     - roles/iam.organizationRoleAdmin
@@ -95,9 +96,8 @@ iam_by_principals:
   # uncomment for cooperative VPC-SC configurations
   # $iam_principals:service_accounts/iac-0/iac-pf-rw:
   #   - roles/accesscontextmanager.policyEditor
-  # uncomment if you want to use Assured Workloads
-  # $iam_principals:service_accounts/iac-0/iac-pf-rw:
-  #   - roles/assuredworkloads.editor
+  $iam_principals:service_accounts/iac-0/iac-pf-rw:
+    - roles/assuredworkloads.editor
   $iam_principals:service_accounts/iac-0/iac-security-rw:
     # uncomment for cooperative VPC-SC configurations
     # - roles/accesscontextmanager.policyEditor
@@ -181,4 +181,7 @@ iam_bindings_additive:
     member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
   bootstrap_sa_monitoring_admin:
     role: roles/monitoring.admin
+    member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com
+  bootstrap_sa_assured_workloads_admin:
+    role: roles/assuredworkloads.admin
     member: serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com

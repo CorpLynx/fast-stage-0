@@ -1,0 +1,35 @@
+# ============================================================================
+# PRE-APPLY MANUAL STEPS (required before first Terraform apply)
+# ============================================================================
+# The bootstrap SA needs roles/assuredworkloads.admin to create this folder,
+# but the additive IAM binding below won't take effect until the apply succeeds.
+# Follow the same pattern as CHANGELOG issue #11 and runbook Step 5:
+#
+# 1. Disable the custom.iamDisableAdminServiceAccountV2 constraint:
+#    gcloud org-policies set-policy /tmp/disable-iam-constraint.yaml
+#
+# 2. Wait 70 seconds for propagation:
+#    sleep 70
+#
+# 3. Grant roles/assuredworkloads.admin to the bootstrap SA:
+#    gcloud organizations add-iam-policy-binding 1041701195417 \
+#      --member="serviceAccount:fast-bootstrap@fpoc-seed-bootstrap.iam.gserviceaccount.com" \
+#      --role="roles/assuredworkloads.admin" \
+#      --condition=None
+#
+# 4. Re-enable the custom.iamDisableAdminServiceAccountV2 constraint:
+#    gcloud org-policies set-policy /tmp/enable-iam-constraint.yaml
+#
+# After the first successful apply, the iam_bindings_additive entry in
+# organization/.config.yaml will manage this role declaratively.
+# ============================================================================
+
+# yaml-language-server: $schema=../../../../schemas/folder.schema.json
+
+name: FedRAMP High
+assured_workload_config:
+  compliance_regime: FEDRAMP_HIGH
+  display_name: FedRAMP High Compliance Boundary
+  location: us-east4
+  organization: "1041701195417"
+  violation_notifications_enabled: true

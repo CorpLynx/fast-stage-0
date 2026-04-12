@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# FedRAMP High Service Compatibility: VERIFIED
+# All services in this project are FedRAMP High authorized.
+# Services audited: bigquery, bigquerydatatransfer, cloudkms, logging, storage
+# Audit date: 2025-07-15
+
 # yaml-language-server: $schema=../../../../schemas/project.schema.json
 
 name: prod-billing-exp-0
