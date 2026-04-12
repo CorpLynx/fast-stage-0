@@ -256,6 +256,9 @@ folders, service accounts, org policies, logging sinks, and tags.
 #   cloudkms.admin          — manage KMS keyrings in automation projects (403 without it)
 #   bigquery.jobUser        — required by the Google Terraform provider to look up
 #                             BQ service account identities on managed projects
+#   assuredworkloads.admin  — create and manage Assured Workloads folders (FedRAMP High
+#                             compliance boundary); required before the second apply that
+#                             uncomments assured_workload_config in fedramp-high/.config.yaml
 #
 # IMPORTANT: The custom org policy custom.iamDisableAdminServiceAccountV2 blocks
 # granting admin roles to service accounts. You must temporarily disable it before
@@ -309,7 +312,8 @@ for role in \
   roles/essentialcontacts.admin \
   roles/storage.admin \
   roles/cloudkms.admin \
-  roles/bigquery.jobUser; do
+  roles/bigquery.jobUser \
+  roles/assuredworkloads.admin; do
 
   # add-iam-policy-binding is additive — it won't remove existing bindings.
   # --quiet suppresses the confirmation prompt.
@@ -611,7 +615,8 @@ for role in \
   roles/essentialcontacts.admin \
   roles/storage.admin \
   roles/cloudkms.admin \
-  roles/bigquery.jobUser; do
+  roles/bigquery.jobUser \
+  roles/assuredworkloads.admin; do
   gcloud organizations remove-iam-policy-binding "$ORG_ID" \
     --member="serviceAccount:$BOOTSTRAP_SA_EMAIL" \
     --role="$role" --quiet 2>/dev/null || true
