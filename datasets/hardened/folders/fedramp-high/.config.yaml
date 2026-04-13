@@ -27,13 +27,10 @@
 # yaml-language-server: $schema=../../../../schemas/folder.schema.json
 
 name: FedRAMP High
-# assured_workload_config is commented out for the first apply.
-# The org-level gcp.restrictServiceUsage policy must allow assuredworkloads.googleapis.com
-# before this resource can be created. Apply once without it to propagate the allowlist,
-# then uncomment and apply again to create the Assured Workloads workload.
-# assured_workload_config:
-#   compliance_regime: FEDRAMP_HIGH
-#   display_name: FedRAMP High Compliance Boundary
-#   location: us-east4
-#   organization: "1041701195417"
-#   violation_notifications_enabled: true
+parent: $folder_ids:aw-root
+assured_workload_config:
+  compliance_regime: FEDRAMP_HIGH
+  display_name: FRH Folder
+  location: us-east4
+  organization: "1041701195417"
+  violation_notifications_enabled: true
