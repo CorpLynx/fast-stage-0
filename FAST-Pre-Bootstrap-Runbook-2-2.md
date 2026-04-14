@@ -260,7 +260,7 @@ folders, service accounts, org policies, logging sinks, and tags.
 #                             compliance boundary); required before the second apply that
 #                             uncomments assured_workload_config in fedramp-high/.config.yaml
 #
-# IMPORTANT: The custom org policy custom.iamDisableAdminServiceAccountV2 blocks
+# IMPORTANT: The custom org policy custom.iamDisableAdminServiceAccountV4 blocks
 # granting admin roles to service accounts. You must temporarily disable it before
 # running the role grants below, then re-enable it after.
 #
@@ -276,7 +276,7 @@ folders, service accounts, org policies, logging sinks, and tags.
 #
 # Disable the constraint first:
 #   cat > /tmp/policy.yaml << 'EOF'
-#   name: organizations/ORG_ID/policies/custom.iamDisableAdminServiceAccountV2
+#   name: organizations/ORG_ID/policies/custom.iamDisableAdminServiceAccountV4
 #   spec:
 #     rules:
 #       - enforce: false
@@ -284,7 +284,7 @@ folders, service accounts, org policies, logging sinks, and tags.
 #   gcloud org-policies set-policy /tmp/policy.yaml
 #
 # After granting all roles, re-enable by deleting the override:
-#   gcloud org-policies delete custom.iamDisableAdminServiceAccountV2 \
+#   gcloud org-policies delete custom.iamDisableAdminServiceAccountV4 \
 #     --organization=ORG_ID
 #
 # Verify all roles landed correctly after granting (no conditions should be present):
@@ -348,15 +348,15 @@ FAST manages org IAM authoritatively. Add the bootstrap SA roles to
 `iam_bindings_additive` in `datasets/hardened/organization/.config.yaml`
 so Terraform preserves them.
 
-> **CRITICAL — `custom.iamDisableAdminServiceAccountV2` deadlock:**
-> If your org has the `custom.iamDisableAdminServiceAccountV2` custom constraint
+> **CRITICAL — `custom.iamDisableAdminServiceAccountV4` deadlock:**
+> If your org has the `custom.iamDisableAdminServiceAccountV4` custom constraint
 > active, Terraform will apply it mid-run (before the IAM bindings step), which
 > blocks granting admin roles to the bootstrap SA. This creates a deadlock where
 > the SA can't get the permissions it needs to complete the run.
 >
 > To break the deadlock:
 > 1. Temporarily comment out the constraint definition in
->    `datasets/hardened/organization/custom-constraints/custom.iamDisableAdminServiceAccountV2.yaml`
+>    `datasets/hardened/organization/custom-constraints/custom.iamDisableAdminServiceAccountV4.yaml`
 >    and its import block in `imports.tf`.
 > 2. Disable the constraint via org policy override before granting roles (see Step 5).
 > 3. Once a TFC run succeeds with `iam_bindings_additive` in place, the roles are

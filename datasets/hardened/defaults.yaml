@@ -26,7 +26,7 @@ observability:
 projects:
   defaults:
     # prefix must be unique and less than 9 characters
-    prefix: fpoc2
+    prefix: fpoc3
     locations:
       bigquery: $locations:primary
       logging: $locations:primary

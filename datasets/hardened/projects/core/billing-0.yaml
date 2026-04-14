@@ -20,7 +20,7 @@
 # yaml-language-server: $schema=../../../../schemas/project.schema.json
 
 name: prod-billing-exp-0
-parent: $folder_ids:fedramp-high
+parent: $folder_ids:frhigh
 iam_by_principals:
   $iam_principals:service_accounts/iac-0/iac-org-ro:
     - roles/bigquery.jobUser

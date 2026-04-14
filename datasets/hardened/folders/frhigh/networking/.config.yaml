@@ -15,7 +15,23 @@
 # yaml-language-server: $schema=../../../../schemas/folder.schema.json
 
 name: Network
-parent: $folder_ids:fedramp-high
+org_policies:
+  compute.restrictCloudNATUsage:
+    rules:
+      - allow:
+          all: true
+  compute.restrictDedicatedInterconnectUsage:
+    rules:
+      - allow:
+          all: true
+  compute.restrictPartnerInterconnectUsage:
+    rules:
+      - allow:
+          all: true
+  compute.restrictSharedVpcHostProjects:
+    rules:
+      - allow:
+          all: true
 iam_by_principals:
   $iam_principals:service_accounts/iac-0/iac-networking-rw:
     - roles/compute.networkAdmin

@@ -27,7 +27,7 @@
 # yaml-language-server: $schema=../../../../schemas/folder.schema.json
 
 name: FedRAMP High
-parent: $folder_ids:aw-root
+parent: $folder_ids:awroot
 assured_workload_config:
   compliance_regime: FEDRAMP_HIGH
   display_name: FRH Folder

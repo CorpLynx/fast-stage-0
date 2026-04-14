@@ -15,11 +15,10 @@
 # yaml-language-server: $schema=../../../../schemas/folder.schema.json
 
 name: Data Platform
-parent: $folder_ids:fedramp-high
 org_policies:
-  custom.iamDisableAdminServiceAccountV2:
+  custom.iamDisableAdminServiceAccountV4:
     rules:
       - enforce: false
-  custom.iamDisableProjectServiceAccountImpersonationRolesV2:
+  custom.iamDisableProjectServiceAccountImpersonationRolesV4:
     rules:
       - enforce: false

@@ -30,30 +30,6 @@ compute.requireVpcFlowLogs:
           - "LIGHT"
           - "COMPREHENSIVE"
 
-compute.restrictCloudNATUsage:
-  rules:
-    - allow:
-        values:
-          - "under:${folder_ids.networking}"
-
-compute.restrictDedicatedInterconnectUsage:
-  rules:
-    - allow:
-        values:
-          - "under:${folder_ids.networking}"
-
-compute.restrictPartnerInterconnectUsage:
-  rules:
-    - allow:
-        values:
-          - "under:${folder_ids.networking}"
-
-compute.restrictSharedVpcHostProjects:
-  rules:
-    - allow:
-        values:
-          - "under:${folder_ids.networking}"
-
 compute.restrictVpcPeering:
   rules:
     - allow:

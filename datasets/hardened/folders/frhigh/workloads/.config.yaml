@@ -14,41 +14,34 @@
 
 # yaml-language-server: $schema=../../../../schemas/folder.schema.json
 
-name: Security
-parent: $folder_ids:fedramp-high
+name: Workloads
 iam_by_principals:
-  $iam_principals:service_accounts/iac-0/iac-security-rw:
-    - roles/cloudkms.admin
+  $iam_principals:service_accounts/iac-0/iac-pf-rw:
+    - roles/bigquery.admin
+    - roles/container.admin
+    - roles/iam.serviceAccountAdmin
     - roles/logging.admin
+    - roles/pubsub.admin
     - roles/resourcemanager.folderAdmin
     - roles/resourcemanager.projectCreator
     - roles/resourcemanager.projectDeleter
     - roles/resourcemanager.projectIamAdmin
     - roles/resourcemanager.tagUser
-    - roles/securitycenter.admin
     - roles/serviceusage.serviceUsageAdmin
-  $iam_principals:service_accounts/iac-0/iac-security-ro:
+    - roles/storage.admin
+    - $custom_roles:service_project_network_admin
+  $iam_principals:service_accounts/iac-0/iac-pf-ro:
+    - roles/bigquery.dataViewer
+    - roles/bigquery.jobUser
     - roles/browser
-    - roles/cloudkms.viewer
+    - roles/compute.viewer
+    - roles/container.clusterViewer
     - roles/logging.viewer
+    - roles/pubsub.viewer
     - roles/resourcemanager.folderViewer
     - roles/resourcemanager.tagViewer
-    - roles/securitycenter.viewer
     - roles/serviceusage.serviceUsageViewer
     - $custom_roles:logging_viewer
-  $iam_principals:service_accounts/iac-0/iac-pf-rw:
-    - roles/cloudkms.cryptoKeyEncrypterDecrypter
-  $iam_principals:service_accounts/iac-0/iac-pf-ro:
-    - roles/cloudkms.viewer
-    - $custom_roles:project_iam_viewer
-iam_bindings:
-  project_factory:
-    role: roles/resourcemanager.projectIamAdmin
-    members:
-      - $iam_principals:service_accounts/iac-0/iac-pf-rw
-    condition:
-      title: Project factory delegated IAM grant.
-      expression: |
-        api.getAttribute('iam.googleapis.com/modifiedGrantsByRole', []).hasOnly([
-          'roles/cloudkms.cryptoKeyEncrypterDecrypter'
-        ])
+    - $custom_roles:service_account_viewer
+tag_bindings:
+  context: $tag_values:context/project-factory

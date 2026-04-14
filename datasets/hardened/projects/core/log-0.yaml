@@ -20,7 +20,7 @@
 # yaml-language-server: $schema=../../../../schemas/project.schema.json
 
 name: prod-audit-logs-0
-parent: $folder_ids:fedramp-high
+parent: $folder_ids:frhigh
 iam_by_principals:
   $iam_principals:service_accounts/iac-0/iac-org-ro:
     - roles/browser
@@ -77,6 +77,6 @@ org_policies:
     rules:
       - allow:
           all: true
-  custom.storageRequireBucketObjectVersionningV2:
+  custom.storageRequireBucketObjectVersionningV4:
     rules:
       - enforce: true

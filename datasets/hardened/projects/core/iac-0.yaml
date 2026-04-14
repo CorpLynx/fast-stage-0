@@ -26,7 +26,7 @@
 
 # TODO: data access logs configuration
 name: prod-iac-core-0
-parent: $folder_ids:fedramp-high
+parent: $folder_ids:frhigh
 iam_by_principals:
   $iam_principals:gcp-organization-admins:
     - roles/iam.serviceAccountTokenCreator
