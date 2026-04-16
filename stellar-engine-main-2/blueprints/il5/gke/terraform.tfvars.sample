@@ -1,0 +1,70 @@
+# -----------------------------------------------------------------------------
+# PROJECT CONFIGURATION
+# -----------------------------------------------------------------------------
+# The Main Project is where the GKE cluster will be created.
+main_project_id    = "xxxx-xxxx-gke-main-0"
+
+# The Landing Zone Project contains the Shared VPC network.
+landing_project_id = "xxxx-xxxx-net-host-0"
+
+# The Core Project contains the Cloud KMS key for encryption.
+core_project_id    = "xxxx-xxxx-iac-core-0"
+
+# -----------------------------------------------------------------------------
+# GCP REGION
+# -----------------------------------------------------------------------------
+gcp_region = "us-east4"
+
+# -----------------------------------------------------------------------------
+# EXISTING INFRASTRUCTURE DETAILS
+# -----------------------------------------------------------------------------
+existing_network_name                       = "xxxxxxxxxx-spoke-0"
+existing_subnetwork_name                    = "default-us-east4"
+existing_subnetwork_secondary_range_pods_name     = "xxxxxxxxxx"
+existing_subnetwork_secondary_range_services_name = "xxxxxxxxxx"
+existing_kms_keyring_name                   = "xxxxxxxxxx-keyring"
+existing_kms_key_name                       = "xxxxxxxxxx"
+
+# -----------------------------------------------------------------------------
+# GKE CLUSTER SPECIFIC CONFIGURATION
+# -----------------------------------------------------------------------------
+gke_cluster_name                  = "gke-cluster-name-00"
+
+# Set to false only when you intend to run 'terraform destroy'.
+enable_deletion_protection        = true
+
+# Disable the public IP and force internal communication
+gke_cluster_enable_private_endpoint  = true
+
+# WARNING: Enabling global access expands the internal attack surface.
+# For high-security environments, this should only be enabled if there is a
+# documented operational requirement for cross-region private management.
+gke_cluster_master_global_access  = false
+
+# This range should be the CIDR of the subnetwork where your bastion host or
+# other management resources reside. It is a map of authorized networks
+# that can access the GKE master endpoint. This should be scoped as tightly
+# as possible.
+master_authorized_ranges = {
+  "management-subnet" = "xxx.xxx.xxx.xxx/xx"
+}
+
+
+# -----------------------------------------------------------------------------
+# GKE NODEPOOL CONFIGURATION
+# -----------------------------------------------------------------------------
+gke_initial_node_per_zone = 1
+gke_nodepool_name           = "gke-nodepool-name-00"
+nodepool_node_count         = { initial = 1 }
+node_machine_type           = "n2d-standard-2"
+node_disk_size_gb           = 20
+node_config_tags            = ["gke-nodes", "compliant-gke"]
+remove_default_node_pool    = false
+
+# -----------------------------------------------------------------------------
+# BASTION HOST CONFIGURATION
+# -----------------------------------------------------------------------------
+bastion_vm_name           = "gke-bastion-vm-01"
+bastion_vm_zone           = "us-east4-a"
+bastion_vm_machine_type   = "e2-medium"
+bastion_vm_image          = "projects/cos-cloud/global/images/family/cos-stable"

@@ -1,0 +1,6 @@
+main_project_id    = "xxxx-xxxx-main-0"
+
+region              = "us-east4"
+deletion_protection = false
+src_lang            = "en" # https://cloud.google.com/translate/docs/languages
+target_lang         = "es"

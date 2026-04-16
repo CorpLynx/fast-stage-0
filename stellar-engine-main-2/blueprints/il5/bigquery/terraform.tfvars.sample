@@ -1,0 +1,18 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+core_project_id = "xxxx-xxxx-xxxx-iac-core-0"
+
+dataset_id          = "dataset_id_00"
+dataset_description = "dataset-description"
+tables              = {
+    "table_1" = {
+        deletion_protection = false
+        labels = {}
+        options = {
+            encryption_key = "projects/xxxx-xxxx-xxxx-iac-core-0/locations/us-xxxx/keyRings/xxxx-xxxx-keyring/cryptoKeys/default"
+        }
+    }
+}
+region              = "us-east4"
+
+kms_keyring_name = "xxxx-xxxx-keyring"
+kms_key_name     = "default"

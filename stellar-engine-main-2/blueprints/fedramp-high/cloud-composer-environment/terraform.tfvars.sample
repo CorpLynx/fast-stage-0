@@ -1,0 +1,7 @@
+main_project_id    = "xxxx-xxxx-xxxx-main-0"
+network_project_id = "xxxx-xxxx-net-host"
+
+composer_env_name = "composer-env-name-00"
+network_name      = "xxxx-spoke-0"
+subnetwork_name   = "default-us-east4"
+region            = "us-east4"

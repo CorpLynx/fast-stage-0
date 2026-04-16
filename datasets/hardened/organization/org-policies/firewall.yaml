@@ -18,110 +18,110 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.firewallEnforcePolicyRuleLoggingV2:
+custom.firewallEnforcePolicyRuleLoggingV4:
   rules:
     - enforce: true
 
-custom.firewallEnforceRuleLoggingV2:
+custom.firewallEnforceRuleLoggingV4:
   rules:
     - enforce: true
 
-custom.firewallRequireDescriptionV2:
+custom.firewallRequireDescriptionV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictCacheSearchDatabasesPolicyRuleV2:
+custom.firewallRestrictCacheSearchDatabasesPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictCacheSearchDatabasesRuleV2:
+custom.firewallRestrictCacheSearchDatabasesRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictDirectoryServicesPolicyRuleV2:
+custom.firewallRestrictDirectoryServicesPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictDirectoryServicesRuleV2:
+custom.firewallRestrictDirectoryServicesRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictExplicitAllPortsPolicyRuleV2:
+custom.firewallRestrictExplicitAllPortsPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictExplicitAllPortsRuleV2:
+custom.firewallRestrictExplicitAllPortsRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictInsecureProtocolsPolicyRuleV2:
+custom.firewallRestrictInsecureProtocolsPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictInsecureProtocolsRuleV2:
+custom.firewallRestrictInsecureProtocolsRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictMailProtocolsPolicyRuleV2:
+custom.firewallRestrictMailProtocolsPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictMailProtocolsRuleV2:
+custom.firewallRestrictMailProtocolsRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictManagementPortsPolicyRuleV2:
+custom.firewallRestrictManagementPortsPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictManagementPortsRuleV2:
+custom.firewallRestrictManagementPortsRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictNetworkServicesPolicyRuleV2:
+custom.firewallRestrictNetworkServicesPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictNetworkServicesRuleV2:
+custom.firewallRestrictNetworkServicesRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictNoSQLDatabasesPolicyRuleV2:
+custom.firewallRestrictNoSQLDatabasesPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictNoSQLDatabasesRuleV2:
+custom.firewallRestrictNoSQLDatabasesRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictPublicAccessPolicyRuleV2:
+custom.firewallRestrictPublicAccessPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictPublicAccessRuleV2:
+custom.firewallRestrictPublicAccessRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictRdpPolicyRuleV2:
+custom.firewallRestrictRdpPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictRdpRuleV2:
+custom.firewallRestrictRdpRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictSQLDatabasesPolicyRuleV2:
+custom.firewallRestrictSQLDatabasesPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictSQLDatabasesRuleV2:
+custom.firewallRestrictSQLDatabasesRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictSshPolicyRuleV2:
+custom.firewallRestrictSshPolicyRuleV4:
   rules:
     - enforce: true
 
-custom.firewallRestrictSshRuleV2:
+custom.firewallRestrictSshRuleV4:
   rules:
     - enforce: true

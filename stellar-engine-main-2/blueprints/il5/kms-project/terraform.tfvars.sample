@@ -1,0 +1,36 @@
+main_project_id = "xxxx-xxxx-main-0" # The project where IAM policies will be managed (should be the project where KMS keys reside)
+
+gcp_region      = "us-east4"        # The region where the existing KMS KeyRing is located
+core_project_id = "xxxx-xxxx-iac-core-0" # The project where the existing KMS KeyRing and CryptoKeys are provisioned
+
+existing_kms_keyring_name = "my-existing-keyring" # Name of the existing KMS KeyRing
+
+existing_kms_keys = {
+  "my-application-key" = { # Name of an existing CryptoKey within 'my-existing-keyring'
+    # These are example IAM members to add to the existing 'my-application-key'.
+    # This blueprint will apply 'roles/cloudkms.cryptoKeyEncrypterDecrypter' to these members.
+    iam_members = {
+      "roles/cloudkms.cryptoKeyEncrypterDecrypter" = [
+        "serviceAccount:my-app-sa@xxxx-xxxx-app-0.iam.gserviceaccount.com",
+        "user:app-dev@yourdomain.com",
+        "group:app-admins@yourdomain.com"
+      ]
+    }
+    # Example: Optionally manage rotation period on this existing key
+    # rotation_period_s = 7776000 # 90 days in seconds
+  }
+  "my-other-key" = { # Another existing CryptoKey
+    iam_members = {
+      "roles/cloudkms.viewer" = [
+        "user:viewer@yourdomain.com"
+      ]
+    }
+  }
+}
+
+# These emails are used by the default_encrypter_decrypter resources in main.tf
+# They grant 'roles/cloudkms.cryptoKeyEncrypterDecrypter' to *all* keys specified in 'existing_kms_keys'.
+# Set to null if not needed for the default grants.
+email       = "user@yourdomain.com" # Example user email for default encrypter/decrypter role
+group_email = "group@yourdomain.com" # Example group email for default encrypter/decrypter role
+

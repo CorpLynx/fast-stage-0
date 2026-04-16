@@ -1,0 +1,7 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+
+function_name = "function-name-00"
+bucket_name   = "bucket-name-00"
+region        = "us-east4"
+
+kms_key_name = "projects/<CORE-PROJECT-ID>/locations/us-east4/keyRings/xxxx-xxxx-keyring/cryptoKeys/default"

@@ -1,0 +1,11 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+
+firestore_database_name = "firestore-database-00"
+region                  = "us-east4"
+
+backup_schedule = {
+  retention         = "86400s"
+  weekly_recurrence = "SUNDAY" # Example: Backup every Sunday.  See documentation for other options.
+
+  # daily_recurrence = true # Uncomment if needed - backups daily at the default time.
+}

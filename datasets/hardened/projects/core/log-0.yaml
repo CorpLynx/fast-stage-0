@@ -77,6 +77,8 @@ org_policies:
     rules:
       - allow:
           all: true
-  custom.storageRequireBucketObjectVersionningV4:
-    rules:
-      - enforce: true
+  # custom.storageRequireBucketObjectVersionningV4 temporarily commented out
+  # until constraint is created at org level — uncomment after first successful apply
+  # custom.storageRequireBucketObjectVersionningV4:
+  #   rules:
+  #     - enforce: true

@@ -18,15 +18,15 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.iamDisableAdminServiceAccountV2:
+custom.iamDisableAdminServiceAccountV4:
   rules:
     - enforce: false  # TEMPORARY: disabled during bootstrap SA setup, re-enable after WIF switchover
 
-custom.iamDisableBasicRolesV2:
+custom.iamDisableBasicRolesV4:
   rules:
     - enforce: true
 
-custom.iamDisableProjectServiceAccountImpersonationRolesV2:
+custom.iamDisableProjectServiceAccountImpersonationRolesV4:
   rules:
     - enforce: false
       condition:
@@ -35,7 +35,7 @@ custom.iamDisableProjectServiceAccountImpersonationRolesV2:
           resource.matchTag('${organization.id}/org-policies', 'allowed-sa-impersonation')
     - enforce: true
 
-custom.iamDisableRedisAdminRolesV2:
+custom.iamDisableRedisAdminRolesV4:
   rules:
     - enforce: false
 

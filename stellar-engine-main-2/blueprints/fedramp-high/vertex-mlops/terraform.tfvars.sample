@@ -1,0 +1,27 @@
+project_config = {
+  main_project_id = "xxxx-xxxx-main-0"
+}
+
+network_config = {
+  network_project_id = "xxxx-xxxx-net-host"
+  network_name       = "xxxx-spoke-0"
+  subnetwork_name    = "default-us-east4"
+}
+
+bucket_name  = "vertex-bucket-name-00"
+dataset_name = "vertex_dataset_name_00" # Cannot contain dashes '-'
+prefix       = "xxxx"
+region       = "us-central" # us-central1 is recommended
+
+notebooks = {
+  "<NOTEBOOK-NAME-00>" = {
+    type = "USER_MANAGED"
+  }
+}
+
+service_encryption_keys = {
+  aiplatform = "projects/<CORE-PROJECT-ID>/locations/us-east4/keyRings/xxxx-xxxx-keyring/cryptoKeys/default"
+  bq         = "projects/<CORE-PROJECT-ID>/locations/us-east4/keyRings/xxxx-xxxx-keyring/cryptoKeys/default"
+  notebooks  = "projects/<CORE-PROJECT-ID>/locations/us-east4/keyRings/xxxx-xxxx-keyring/cryptoKeys/default"
+  storage    = "projects/<CORE-PROJECT-ID>/locations/us-east4/keyRings/xxxx-xxxx-keyring/cryptoKeys/default"
+}

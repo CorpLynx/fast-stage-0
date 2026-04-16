@@ -18,6 +18,6 @@
 
 # yaml-language-server: $schema=../../../../schemas/org-policies.schema.json
 
-custom.accesscontextmanagerDisableBridgePerimetersV2:
+custom.accesscontextmanagerDisableBridgePerimetersV4:
   rules:
     - enforce: true

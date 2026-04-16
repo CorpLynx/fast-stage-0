@@ -34,23 +34,23 @@ cloudfunctions.requireVPCConnector:
   rules:
     - enforce: true
 
-custom.cloudrunDisableEnvironmentVariablePatternV2:
+custom.cloudrunDisableEnvironmentVariablePatternV4:
   rules:
     - enforce: true
 
-custom.cloudrunJobDisableDefaultServiceAccountV2:
+custom.cloudrunJobDisableDefaultServiceAccountV4:
   rules:
     - enforce: true
 
-custom.cloudrunJobRequireBinaryAuthorizationV2:
+custom.cloudrunJobRequireBinaryAuthorizationV4:
   rules:
     - enforce: true
 
-custom.cloudrunServiceDisableDefaultServiceAccountV2:
+custom.cloudrunServiceDisableDefaultServiceAccountV4:
   rules:
     - enforce: true
 
-custom.cloudrunServiceRequireBinaryAuthorizationV2:
+custom.cloudrunServiceRequireBinaryAuthorizationV4:
   rules:
     - enforce: true
 

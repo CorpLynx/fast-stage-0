@@ -1,0 +1,43 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+main:
+  steps:
+    - start:
+        call: sys.log
+        args:
+          text: "Doc AI Workflow started."
+    - vars:
+        assign:
+          - input_gcs_bucket: ${sys.get_env("input_bucket")}
+          - output_gcs_bucket: ${sys.get_env("output_bucket")}
+          - processor_id: ${sys.get_env("processor_id")}
+          - location: "us"
+          - project_id: ${sys.get_env("project_id")}
+    - batch_process:
+        call: googleapis.documentai.v1.projects.locations.processors.batchProcess
+        args:
+          name: ${processor_id}
+          location: ${location}
+          body:
+            inputDocuments:
+              gcsPrefix:
+                gcsUriPrefix: ${input_gcs_bucket}
+            documentOutputConfig:
+              gcsOutputConfig:
+                gcsUri: ${output_gcs_bucket}
+            skipHumanReview: true
+        result: batch_process_resp
+    - return:
+        return: ${batch_process_resp}

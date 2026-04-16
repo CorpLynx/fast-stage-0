@@ -1,0 +1,9 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+
+instance_name = "cloud-spanner-instance-name-00"
+display_name  = "cloud-spanner-display-name-00"
+edition       = "ENTERPRISE"
+database_name = "database-name-01"
+database_user = "group:<GROUP-EMAIL-ADDRESS>"
+
+region = "us-east4"

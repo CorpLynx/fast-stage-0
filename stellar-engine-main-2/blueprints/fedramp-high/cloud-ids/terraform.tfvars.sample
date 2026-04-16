@@ -1,0 +1,8 @@
+main_project_id    = "xxxx-xxxx-xxxx-main-0"
+network_project_id = "xxxx-xxxx-net-host"
+
+ids_name = "ids-name-00"
+region   = "us-east4"
+prefix   = "xxxx"
+
+network_name = "xxxx-spoke-0"

@@ -1,0 +1,131 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+output "admin_group" {
+  value       = var.admin_group
+  description = "The principal for the Gemini Enterprise administrators group."
+}
+
+output "user_group" {
+  value       = var.user_group
+  description = "The principal for the Gemini Enterprise users group."
+}
+
+output "gemini_enterprise_ip" {
+  value       = google_compute_address.gemini_enterprise_ip.address
+  description = "The reserved IP address for the load balancer."
+}
+
+output "deployment_type" {
+  value       = var.deployment_type
+  description = "The deployment type of the load balancer (internal or external)."
+}
+
+output "tf_state_bucket_name" {
+  value       = data.google_storage_bucket.terraform_state.name
+  description = "The name of the GCS bucket used for Terraform state."
+}
+
+output "access_policy_number" {
+  value       = var.access_policy_number
+  description = "The Access Policy number."
+}
+
+output "main_project_id" {
+  value       = var.main_project_id
+  description = "The GCP Project name."
+}
+
+output "prefix" {
+  value       = var.prefix
+  description = "Prefix for naming resources."
+}
+
+output "region" {
+  value       = var.region
+  description = "GCP Region."
+}
+
+output "acl_idp_type" {
+  value       = var.acl_idp_type
+  description = "The Identity Provider type for Discovery Engine ACLs. Options: 'GSUITE', 'THIRD_PARTY'."
+}
+
+output "acl_workforce_pool_name" {
+  value       = var.acl_workforce_pool_name
+  description = "The resource name of the Workforce Identity Pool (required if acl_idp_type is 'THIRD_PARTY'). Format: locations/global/workforcePools/<pool_id>"
+}
+
+output "acl_workforce_provider_id" {
+  value       = var.acl_workforce_provider_id
+  description = "The ID of the Workforce Identity Pool Provider (required if acl_idp_type is 'THIRD_PARTY'). Format: <provider_id> (without acl_workforce_pool_name prefix)"
+}
+
+output "enable_chrome_enterprise_premium" {
+  value       = var.enable_chrome_enterprise_premium
+  description = "Whether Chrome Enterprise Premium (Zero Trust) is enabled."
+}
+
+output "use_shared_vpc" {
+  value       = var.use_shared_vpc
+  description = "Whether Shared VPC is used."
+}
+
+output "network_project_id" {
+  value       = var.use_shared_vpc ? var.network_project_id : null
+  description = "The Host Project ID."
+}
+
+output "shared_vpc_network_name" {
+  value       = var.use_shared_vpc ? var.shared_vpc_network_name : null
+  description = "The Shared VPC Network Name."
+}
+
+output "shared_vpc_subnet_name" {
+  value       = var.use_shared_vpc ? var.shared_vpc_subnet_name : null
+  description = "The Shared VPC Subnet Name."
+}
+
+output "shared_vpc_proxy_subnet_name" {
+  value       = var.use_shared_vpc ? var.shared_vpc_proxy_subnet_name : null
+  description = "The Shared VPC Proxy Subnet Name."
+}
+
+output "gcs_data_store_ids" {
+  description = "A list of GCS Discovery Engine Data Store IDs."
+  value       = [for v in google_discovery_engine_data_store.gemini_enterprise_gcs_data_store : v.data_store_id]
+}
+
+output "gcs_data_store_to_bucket" {
+  description = "A mapping of GCS Data Store IDs to their corresponding GCS Bucket names."
+  value       = { for k, v in google_discovery_engine_data_store.gemini_enterprise_gcs_data_store : v.data_store_id => google_storage_bucket.gemini_enterprise_gcs_bucket[k].name }
+}
+
+output "bq_data_store_ids" {
+  description = "A list of BigQuery Discovery Engine Data Store IDs."
+  value       = [for v in google_discovery_engine_data_store.gemini_enterprise_bq_data_store : v.data_store_id]
+}
+
+output "bq_data_store_to_dataset_table" {
+  description = "A mapping of BigQuery Data Store IDs to their corresponding Dataset and Table."
+  value = { for k, v in google_discovery_engine_data_store.gemini_enterprise_bq_data_store : v.data_store_id => {
+    dataset_id = google_bigquery_dataset.gemini_enterprise_bq_dataset[k].dataset_id
+    table_id   = google_bigquery_table.gemini_enterprise_bq_table[k].table_id
+  } }
+}
+
+output "cmek_key_id" {
+  description = "The CMEK Key ID used for encryption."
+  value       = local.cmek_key_id
+}

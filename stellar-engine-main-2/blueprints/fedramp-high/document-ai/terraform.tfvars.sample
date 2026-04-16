@@ -1,0 +1,6 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+
+name                = "document-ai-processor-name-00"
+type                = "OCR_PROCESSOR" # https://cloud.google.com/document-ai/docs/processors-list (look for "Type in API" field)
+deletion_protection = false
+region              = "us-east4"

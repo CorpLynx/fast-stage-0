@@ -1,0 +1,19 @@
+#!/bin/bash
+sudo dnf makecache
+sudo dnf install -yq dnf-plugin-artifact-registry yum-utils
+
+# Hide these for now
+sudo mv /etc/yum.repos.d/centos-addons.repo /etc/yum.repos.d/centos-addons.backup
+sudo mv /etc/yum.repos.d/centos.repo /etc/yum.repos.d/centos.backup
+
+# Configure the artifact-registry entries
+sudo tee -a /etc/yum.repos.d/artifact-registry.repo << EOF
+%{ for repo in yum_repositories ~}
+[${repo.name}]
+name=${repo.name}
+baseurl=https://${region}-yum.pkg.dev/remote/${project}/${repo.name}
+enabled=1
+repo_gpgcheck=0
+gpgcheck=0
+%{ endfor ~}
+EOF

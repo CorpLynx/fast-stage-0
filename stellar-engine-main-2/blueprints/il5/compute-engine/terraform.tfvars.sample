@@ -1,0 +1,16 @@
+main_project_id    = "xxxx-xxxx-xxxx-main-0"
+core_project_id    = "xxxx-xxxx-xxxx-iac-core-0"
+network_project_id = "xxxx-xxxx-net-host"
+
+compute_service_account_id = "compute-engine-sa"
+auto_delete                = true
+region                     = "us-east4"
+zone                       = "us-east4-c"
+instance_name              = "compute-engine-name"
+instance_type              = "n2d-standard-2"
+
+kms_keyring_name = "xxxx-xxxx-keyring"
+kms_key_name     = "default"          # Must already exist
+
+network_name    = "xxxx-spoke-0"      # Must already exist
+subnetwork_name = "default-us-east4"  # Must already exist

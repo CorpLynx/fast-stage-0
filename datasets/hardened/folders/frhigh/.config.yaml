@@ -5,7 +5,7 @@
 # but the additive IAM binding below won't take effect until the apply succeeds.
 # Follow the same pattern as CHANGELOG issue #11 and runbook Step 5:
 #
-# 1. Disable the custom.iamDisableAdminServiceAccountV2 constraint:
+# 1. Disable the custom.iamDisableAdminServiceAccountV4 constraint:
 #    gcloud org-policies set-policy /tmp/disable-iam-constraint.yaml
 #
 # 2. Wait 70 seconds for propagation:
@@ -17,7 +17,7 @@
 #      --role="roles/assuredworkloads.admin" \
 #      --condition=None
 #
-# 4. Re-enable the custom.iamDisableAdminServiceAccountV2 constraint:
+# 4. Re-enable the custom.iamDisableAdminServiceAccountV4 constraint:
 #    gcloud org-policies set-policy /tmp/enable-iam-constraint.yaml
 #
 # After the first successful apply, the iam_bindings_additive entry in
@@ -30,7 +30,7 @@ name: FedRAMP High
 parent: $folder_ids:awroot
 assured_workload_config:
   compliance_regime: FEDRAMP_HIGH
-  display_name: FRH Folder
+  display_name: FedRAMP High Boundary
   location: us-east4
   organization: "1041701195417"
   violation_notifications_enabled: true

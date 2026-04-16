@@ -1,0 +1,20 @@
+# Features for the search engine
+# See https://cloud.google.com/generative-ai-app-builder/docs/reference/rest/v1alpha/projects.locations.collections.engines#features
+features:
+  agent-gallery: "FEATURE_STATE_ON"
+  no-code-agent-builder: "FEATURE_STATE_ON"
+  prompt-gallery: "FEATURE_STATE_OFF"
+  model-selector: "FEATURE_STATE_ON"
+  notebook-lm: "FEATURE_STATE_OFF"
+  people-search: "FEATURE_STATE_OFF"
+  people-search-org-chart: "FEATURE_STATE_OFF"
+  bi-directional-audio: "FEATURE_STATE_OFF"
+  feedback: "FEATURE_STATE_OFF"
+  session-sharing: "FEATURE_STATE_OFF"
+  disable-agent-sharing: "FEATURE_STATE_ON"
+  personalization-memory: "FEATURE_STATE_OFF"
+  disable-image-generation: "FEATURE_STATE_ON"
+  disable-video-generation: "FEATURE_STATE_ON"
+  disable-onedrive-upload: "FEATURE_STATE_ON"
+  disable-talk-to-content: "FEATURE_STATE_ON"
+  disable-google-drive-upload: "FEATURE_STATE_ON"

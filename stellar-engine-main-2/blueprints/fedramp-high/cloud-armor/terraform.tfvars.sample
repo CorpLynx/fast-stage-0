@@ -1,0 +1,3 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+region          = "us-east4"
+rules_file      = "rules.yaml"

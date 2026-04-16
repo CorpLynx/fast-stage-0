@@ -1,0 +1,37 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+basic_rules: #Rules called basic_rules
+  xss:
+    expression: "xss-v33-stable" # Preconfigured rule name
+  lfi:
+    expression: "lfi-v33-stable" # Preconfigured rule name
+  rfi:
+    expression: "rfi-v33-stable" # Preconfigured rule name
+  rce:
+    expression: "rce-v33-stable" # Preconfigured rule name
+  methodenforcement:
+    expression: "methodenforcement-v33-stable" # Preconfigured rule name
+  scannerdetection:
+    expression: "scannerdetection-v33-stable" # Preconfigured rule name
+  protocolattack:
+    expression: "protocolattack-v33-stable" # Preconfigured rule name
+  php:
+    expression: "php-v33-stable" # Preconfigured rule name
+  sessionfixation:
+    expression: "sessionfixation-v33-stable" # Preconfigured rule name
+  java:
+    expression: "java-v33-stable" # Preconfigured rule name
+  nodejs:
+    expression: "nodejs-v33-stable" # Preconfigured rule name

@@ -1,0 +1,29 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+
+dataset_id          = "dataset-id-00"
+dataset_description = "dataset-description"
+tables              = {}
+region              = "us-east4"
+
+kms_keyring_name = {
+  location = "us-east4"
+  name     = "xxxx-xxxx-keyring"
+}
+
+kms_key_names = {
+  "default" = {
+    destroy_scheduled_duration    = null
+    rotation_period               = "7776000s"    # CIS Compliance Benchmark 1.10
+    labels                        = null
+    purpose                       = "ENCRYPT_DECRYPT"
+    skip_initial_version_creation = false
+    version_template = {
+      algorithm        = "GOOGLE_SYMMETRIC_ENCRYPTION"
+      protection_level = "HSM"
+    }
+
+    iam                   = {}
+    iam_bindings          = {}
+    iam_bindings_additive = {}
+  }
+}

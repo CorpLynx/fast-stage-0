@@ -1,0 +1,16 @@
+main_project_id = "xxxx-xxxx-xxxx-main-0"
+core_project_id = "xxxx-xxxx-xxxx-iac-core-0"
+
+name            = "cloud-run-instance-name-00"
+container_image = "us-docker.pkg.dev/cloudrun/container/hello"
+ingress         = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+cpu             = "1000m"
+memory          = "512Mi"
+port            = 80
+region          = "us-east4"
+
+binary_authorization_mode   = "default"
+binary_authorization_policy = null
+
+kms_keyring_name = "xxxx-xxxx-keyring"
+kms_key_name     = "default"          

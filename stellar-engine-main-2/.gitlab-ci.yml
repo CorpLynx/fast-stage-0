@@ -1,0 +1,210 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+workflow:
+  rules:
+    - when: never # This rule will always prevent the pipeline from running until we have a properly configured and registered runner instance.
+
+# This job will never actually run because of the 'workflow: rules: when: never'
+dummy_job:
+  stage: .pre
+  script:
+    - echo "This is a dummy job to satisfy GitLab CI's job requirement."
+    - echo "The pipeline is disabled by 'workflow:rules:when:never'."
+
+# # This file is a template, and might need editing before it works on your project.
+# # This is a sample GitLab CI/CD configuration file that should run without any modifications.
+# # It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
+# # it uses echo commands to simulate the pipeline execution.
+# #
+# # A pipeline is composed of independent jobs that run scripts, grouped into stages.
+# # Stages run in sequential order, but jobs within stages run in parallel.
+# #
+# # For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
+# #
+# # You can copy and paste this template into a new `.gitlab-ci.yml` file.
+# # You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
+# #
+# # To contribute improvements to CI/CD templates, please follow the Development guide at:
+# # https://docs.gitlab.com/ee/development/cicd/templates.html
+# # This specific template is located at:
+# # https://gitlab.com/gitlab-org/gitlab/-/blob/main/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+# stages: # List of stages for jobs, and their order of execution
+#   - lint
+#   - test
+#   - sonarqube-check
+#   - deploy
+# 
+# stages-aw-formatting:
+#   stage: lint
+#   image:
+#     name: hashicorp/terraform:1.11.1
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - cd "fast/stages-aw/"
+#     - terraform fmt -check --recursive
+# 
+# blueprints-formatting:
+#   stage: lint
+#   image:
+#     name: hashicorp/terraform:1.11.1
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - cd "blueprints"
+#     - terraform fmt -check --recursive
+# 
+# tflint-stages-aw:
+#   stage: lint
+#   image:
+#     name: ghcr.io/terraform-linters/tflint:v0.55.0
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - ./generate-mocks.sh
+#     - mkdir reports/
+#     - tflint --recursive --format=sarif --chdir=fast/stages-aw/ | tee reports/stages-tflint.sarif
+#   allow_failure: true
+#   artifacts:
+#     paths:
+#       - reports/stages-tflint.sarif
+#     when: always
+# 
+# tflint-blueprints:
+#   stage: lint
+#   image:
+#     name: ghcr.io/terraform-linters/tflint:v0.55.0
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - mkdir reports/
+#     - tflint --recursive --format=sarif --chdir=blueprints/ | tee reports/blueprints-tflint.sarif
+#   allow_failure: true
+#   artifacts:
+#     paths:
+#       - reports/blueprints-tflint.sarif
+#     when: always
+# 
+# shellcheck:
+#   stage: test
+#   image: koalaman/shellcheck-alpine:stable
+#   script:
+#     - echo "Running ShellCheck..."
+#     - find . -path ./modules -prune -o -type f -name "*.sh" -print0 | xargs -0 shellcheck -x -s bash
+# 
+# validate-stages-aw:
+#   stage: test
+#   image:
+#     name: hashicorp/terraform:1.11.1
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   dependencies:
+#     - tflint-stages-aw
+#   script:
+#     - cd fast/stages-aw
+#     - for i in $(ls -d */); do cd $i; terraform init; terraform validate; cd ..; done
+#   
+# validate-blueprints:
+#   stage: test
+#   image:
+#     name: hashicorp/terraform:1.11.1
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   dependencies:
+#     - tflint-blueprints
+#   script:
+#     - cd blueprints/fedramp-high
+#     - for i in $(ls -d */); do cd $i; terraform init; terraform validate; cd ..; done
+#     - cd ../il5
+#     - for i in $(ls -d */); do cd $i; terraform init; terraform validate; cd ..; done
+# 
+# check-docs-stages-aw:
+#   stage: test
+#   image:
+#     name: python:3.9.19
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - cd tools
+#     - pip install click marko
+#     - python check_documentation.py fast/stages-aw
+# 
+# check-docs-blueprints:
+#   stage: test
+#   image:
+#     name: python:3.9
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - cd tools
+#     - pip install click marko
+#     - python check_documentation.py blueprints
+# 
+# checkov-stages-aw:
+#   stage: test
+#   image:
+#     name: bridgecrew/checkov:3.2.353
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - checkov -o cli -o sarif --output-file-path console,"reports/stages-checkov.sarif" --framework terraform --directory fast/stages-aw/
+#   allow_failure: true
+#   artifacts:
+#     paths:
+#       - reports/stages-checkov.sarif
+#     when: always
+# 
+# checkov-blueprints:
+#   stage: test
+#   image:
+#     name: bridgecrew/checkov:3.2.353
+#     entrypoint:
+#       - "/usr/bin/env"
+#       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#   script:
+#     - checkov -o cli -o sarif --output-file-path console,"reports/blueprints-checkov.sarif" --framework terraform --directory blueprints/
+#   allow_failure: true
+#   artifacts:
+#     paths:
+#       - reports/blueprints-checkov.sarif
+#     when: always
+# 
+# sonarqube-check: # Commented out
+#   needs:
+#     - checkov-stages-aw
+#     - checkov-blueprints
+#     - tflint-stages-aw
+#     - tflint-blueprints
+#   stage: sonarqube-check
+#   image:
+#     name: sonarsource/sonar-scanner-cli:11
+#     entrypoint: [""]
+#   variables:
+#     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+#     GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
+#   script:
+#     - cat reports/stages-tflint.sarif
+#     - sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}"
+#   allow_failure: true
+

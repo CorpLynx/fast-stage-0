@@ -107,7 +107,6 @@ services:
   - networksecurity.googleapis.com
   - orgpolicy.googleapis.com
   - pubsub.googleapis.com
-  - securitycentermanagement.googleapis.com
   - servicenetworking.googleapis.com
   - serviceusage.googleapis.com
   - storage-component.googleapis.com

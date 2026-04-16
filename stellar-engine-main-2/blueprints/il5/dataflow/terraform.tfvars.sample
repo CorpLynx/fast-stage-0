@@ -1,0 +1,24 @@
+
+main_project_id    = "xxxx-xxxx-xxxx-main-0"
+core_project_id    = "xxxx-xxxx-xxxx-iac-core-0"
+network_project_id = "xxxx-xxxx-net-host"
+
+prefix            = "xxxx"
+storage_class     = "STANDARD"
+dataflow_name     = "dataflow-name-00"
+zone              = "us-east4-c"
+bucket_name       = "dataflow-bucket-00"
+template_gcs_path = "gs://dataflow-templates/latest/Word_Count"
+
+parameters = {
+  inputFile = "gs://dataflow-samples/shakespeare/kinglear.txt"
+  output    = "gs://xxxx-dataflow-bucket-00/output"
+}
+
+network_name          = "xxxx-spoke-0"
+subnetwork_name       = "default-us-east4"
+firewall_name         = "allow-dataflow"
+allowed_source_ranges = ["192.168.1.0/24"]
+
+kms_keyring_name = "xxxx-xxxx-keyring"
+kms_key_name     = "default"
