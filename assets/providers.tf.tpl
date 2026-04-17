@@ -30,12 +30,16 @@ terraform {
 }
 provider "google" {
   impersonate_service_account = "${service_account}"
+  user_project_override       = true
+  billing_project             = "fpoc3-prod-iac-core-0"
   %{~ if try(universe_domain, null) != null ~}
   universe_domain = "${universe_domain}"
   %{~ endif ~}
 }
 provider "google-beta" {
   impersonate_service_account = "${service_account}"
+  user_project_override       = true
+  billing_project             = "fpoc3-prod-iac-core-0"
   %{~ if try(universe_domain, null) != null ~}
   universe_domain = "${universe_domain}"
   %{~ endif ~}

@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
+# Automated imports for policies Google enables by default in new organizations
+# Only include policies that are confirmed to exist as default in most orgs
+import {
+  for_each = toset(local.organization_id != null ? [
+    "iam.allowedPolicyMemberDomains",
+    "storage.uniformBucketLevelAccess"
+  ] : [])
+  id = "organizations/${local.organization_id}/policies/${each.key}"
+  to = module.organization-iam[0].google_org_policy_policy.default[each.key]
+}
+
+# Manual imports defined in tfvars
 import {
   for_each = toset(local.organization.id != null ? var.org_policies_imports : [])
   id       = "organizations/${local.organization_id}/policies/${each.key}"
   to       = module.organization-iam[0].google_org_policy_policy.default[each.key]
 }
-
-
-
-
