@@ -7,7 +7,7 @@
     apply: 0-org-setup-providers.tf
     plan: 0-org-setup-providers.tf
   repository:
-    name: Corplynx/fast-stage-0
+    name: brandonrichardson/fast-stage-0
     type: github
     apply_branches:
       - main

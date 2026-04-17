@@ -335,7 +335,7 @@ workload_identity_pools:
     providers:
       github-default:
         display_name: GitHub
-        attribute_condition: attribute.repository_owner=="Corplynx"
+        attribute_condition: attribute.repository_owner=="Corplynx" || attribute.repository_owner=="brandonrichardson"
         identity_provider:
           oidc:
             template: github
