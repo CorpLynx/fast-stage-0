@@ -27,7 +27,7 @@ env:
   FAST_SERVICE_ACCOUNT: iac-org-cicd-rw@fpoc3-prod-iac-core-0.iam.gserviceaccount.com
   FAST_SERVICE_ACCOUNT_PLAN: iac-org-cicd-ro@fpoc3-prod-iac-core-0.iam.gserviceaccount.com
   FAST_WIF_PROVIDER: projects/323614629176/locations/global/workloadIdentityPools/default/providers/github-default
-  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+  # SSH_AUTH_SOCK: /tmp/ssh_agent.sock
   TF_PROVIDERS_FILE: 0-org-setup-providers.tf
   TF_PROVIDERS_FILE_PLAN: 0-org-setup-providers.tf
   TF_VERSION: 1.12.2
@@ -52,12 +52,13 @@ jobs:
         uses: actions/checkout@v4
 
       # set up SSH key authentication to the modules repository
+      # (commented out for open/air-gapped environments)
 
-      - id: ssh-config
-        name: Configure SSH authentication
-        run: |
-          ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
-          ssh-add - <<< "${{ secrets.CICD_MODULES_KEY }}"
+      # - id: ssh-config
+      #   name: Configure SSH authentication
+      #   run: |
+      #     ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
+      #     ssh-add - <<< "${{ secrets.CICD_MODULES_KEY }}"
 
       # set up step variables for plan / apply
 
