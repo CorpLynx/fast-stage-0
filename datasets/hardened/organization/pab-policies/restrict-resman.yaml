@@ -1,6 +1,5 @@
 display_name: "Restrict Resman to Production"
 rules:
   - description: "Allow access only to production hierarchy"
-    effect: ALLOW
     resources:
-      - "folders/1234567890" # Production Folder
+      - "//cloudresourcemanager.googleapis.com/folders/1234567890" # Production Folder

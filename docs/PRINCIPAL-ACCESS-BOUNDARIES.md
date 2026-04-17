@@ -8,7 +8,7 @@ Principal Access Boundaries (PABs) provide a layer of protection that limits the
 
 PABs act as a "deny-by-default" filter for IAM permissions. Even if a user or service account has `roles/owner` at the organization level, a PAB can restrict that access to only a specific subset of folders or projects.
 
-- **Effect:** Currently supports `ALLOW` rules (everything else is denied).
+- **Effect:** Access is allowed only to the resources listed in the rules (and their descendants).
 - **Scope:** Applied to principals (users, groups, or service accounts) to define their "blast radius."
 - **Location:** Defined at the organization level but can reference resources anywhere in the hierarchy.
 
@@ -27,13 +27,15 @@ Each file should define a single PAB policy. The filename (excluding `.yaml`) wi
 
 ```yaml
 display_name: "Short description of the boundary"
+enforcement_version: "latest" # Optional, defaults to latest
 rules:
   - description: "Detailed explanation of this rule"
-    effect: ALLOW
     resources:
-      - "folders/1234567890" # Production Folder
-      - "projects/my-prod-project-123"
+      - "//cloudresourcemanager.googleapis.com/folders/1234567890" # Production Folder
+      - "//cloudresourcemanager.googleapis.com/projects/my-prod-project-123"
 ```
+
+> **Note:** Resources must use the full resource name format (e.g., `//cloudresourcemanager.googleapis.com/folders/12345`).
 
 ---
 
@@ -46,9 +48,8 @@ To restrict a service account's access so it can only manage resources within a 
 display_name: "Restrict Resman to Production"
 rules:
   - description: "Allow access only to the production hierarchy"
-    effect: ALLOW
     resources:
-      - "folders/4567890123" # Replace with your Production Folder ID
+      - "//cloudresourcemanager.googleapis.com/folders/4567890123" # Replace with your Production Folder ID
 ```
 
 2. After deploying with Terraform, the policy will be available at the organization level. You can then bind this policy to a principal using IAM (this part is typically handled in `iam_bindings` or `iam_by_principals` in Stage 0 or Stage 1).
@@ -66,12 +67,12 @@ The `pab_policies` argument in the `organization` module accepts the following f
 ```hcl
 pab_policies = {
   "my-policy-id" = {
-    display_name = "My Policy"
+    display_name        = "My Policy"
+    enforcement_version = "latest"
     rules = [
       {
         description = "Allow access to folder X"
-        effect      = "ALLOW"
-        resources   = ["folders/12345"]
+        resources   = ["//cloudresourcemanager.googleapis.com/folders/12345"]
       }
     ]
   }
