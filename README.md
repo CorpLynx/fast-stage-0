@@ -252,6 +252,7 @@ output_files:
   local_path: "~/fast-configs/test-0"
 ```
 
+
 #### Init and apply the stage
 
 Once everything has been configured go through the standard Terraform init/apply cycle.
