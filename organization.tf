@@ -74,6 +74,10 @@ locals {
   org_tag_values = {
     for k, v in module.organization[0].tag_values : k => v.id
   }
+  pab_policies = {
+    for f in try(fileset("${local.paths.organization}/pab-policies", "*.yaml"), []) :
+    replace(f, ".yaml", "") => yamldecode(file("${local.paths.organization}/pab-policies/${f}"))
+  }
 }
 
 module "organization" {
@@ -165,6 +169,7 @@ module "organization-iam" {
   logging_data_access = try(local.organization.data_access_logs, {})
   logging_sinks       = try(local.organization.logging.sinks, {})
   pam_entitlements    = try(local.organization.pam_entitlements, {})
+  pab_policies        = local.pab_policies
   tags_config = {
     force_context_ids = true
   }
