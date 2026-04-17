@@ -141,7 +141,6 @@ context:
 
 A more detailed example containing a few other attributes that can be set in the file is in a [later section](#defaults-configuration) in this document.
 
-
 ### Initial user permissions
 
 Like in classic FAST, the user running the first apply cycle needs specific permissions on the organization and billing account. Copy the following snippet, edit it to match your organization/billing account ids, then run each command.
