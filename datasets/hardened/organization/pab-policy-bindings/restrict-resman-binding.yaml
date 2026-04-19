@@ -1,0 +1,2 @@
+policy_id: "restrict-resman"
+principal_set: "//iam.googleapis.com/projects/-/serviceAccounts/iac-org-rw@fpoc3-prod-iac-core-0.iam.gserviceaccount.com"

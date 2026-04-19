@@ -78,6 +78,10 @@ locals {
     for f in try(fileset("${local.paths.organization}/pab-policies", "*.yaml"), []) :
     replace(f, ".yaml", "") => yamldecode(file("${local.paths.organization}/pab-policies/${f}"))
   }
+  pab_policy_bindings = {
+    for f in try(fileset("${local.paths.organization}/pab-policy-bindings", "*.yaml"), []) :
+    replace(f, ".yaml", "") => yamldecode(file("${local.paths.organization}/pab-policy-bindings/${f}"))
+  }
 }
 
 module "organization" {
@@ -170,6 +174,7 @@ module "organization-iam" {
   logging_sinks       = try(local.organization.logging.sinks, {})
   pam_entitlements    = try(local.organization.pam_entitlements, {})
   pab_policies        = local.pab_policies
+  pab_policy_bindings = local.pab_policy_bindings
   tags_config = {
     force_context_ids = true
   }
