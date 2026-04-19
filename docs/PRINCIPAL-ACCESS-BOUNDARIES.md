@@ -30,6 +30,7 @@ display_name: "Short description of the boundary"
 enforcement_version: "latest" # Optional, defaults to latest
 rules:
   - description: "Detailed explanation of this rule"
+    effect: ALLOW # Required, only ALLOW is currently supported
     resources:
       - "//cloudresourcemanager.googleapis.com/folders/1234567890" # Production Folder
       - "//cloudresourcemanager.googleapis.com/projects/my-prod-project-123"
@@ -48,6 +49,7 @@ To restrict a service account's access so it can only manage resources within a 
 display_name: "Restrict Resman to Production"
 rules:
   - description: "Allow access only to the production hierarchy"
+    effect: ALLOW
     resources:
       - "//cloudresourcemanager.googleapis.com/folders/4567890123" # Replace with your Production Folder ID
 ```
@@ -72,6 +74,7 @@ pab_policies = {
     rules = [
       {
         description = "Allow access to folder X"
+        effect      = "ALLOW"
         resources   = ["//cloudresourcemanager.googleapis.com/folders/12345"]
       }
     ]
