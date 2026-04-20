@@ -17,3 +17,7 @@
 name: net-dev
 tag_bindings:
   environment: $tag_values:environment/production
+
+pab_policy_bindings:
+  restrict-resman-binding:
+    policy_id: "organizations/1041701195417/locations/global/principalAccessBoundaryPolicies/restrict-resman"

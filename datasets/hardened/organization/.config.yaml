@@ -53,6 +53,7 @@ iam_by_principals:
     - roles/resourcemanager.projectCreator
     - roles/resourcemanager.tagAdmin
     - roles/iam.workforcePoolAdmin
+    - roles/iam.principalAccessBoundaryAdmin
   $iam_principals:service_accounts/iac-0/iac-org-rw:
     - roles/accesscontextmanager.policyAdmin
     - roles/assuredworkloads.admin
@@ -60,6 +61,7 @@ iam_by_principals:
     - roles/essentialcontacts.admin
     - roles/iam.organizationRoleAdmin
     - roles/iam.workforcePoolAdmin
+    - roles/iam.principalAccessBoundaryAdmin
     - roles/logging.admin
     - roles/orgpolicy.policyAdmin
     - roles/resourcemanager.folderAdmin
